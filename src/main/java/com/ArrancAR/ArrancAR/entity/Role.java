@@ -1,6 +1,35 @@
 package com.ArrancAR.ArrancAR.entity;
 
-public enum Role {
+import lombok.Data;
 
-    ROLE_USER, ROLE_ADMIN
+import javax.persistence.*;
+
+@Entity
+@Table(name = "role")
+@Data
+public class Role {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idRole;
+
+    @Column
+    private String name;
+
+    @Column
+    private String description;
+
+    public Role(Long idRole, String name, String description) {
+        this.idRole = idRole;
+        this.name = name;
+        this.description = description;
+    }
+
+    public Role(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public Role() {
+    }
 }

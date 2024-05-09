@@ -4,6 +4,10 @@ package com.ArrancAR.ArrancAR.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "vehicle")
 @Data
@@ -15,7 +19,44 @@ public class Vehicle {
     @Column
     private String plate;
     @Column
-    private String model;
+    private String description;
     @Column
-    private String type;
+    private Boolean reserved;
+    @OneToMany(mappedBy = "vehicle",fetch = FetchType.LAZY)
+    private Set<Booking> bookings = new HashSet<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "id_model", referencedColumnName = "idModel")
+    private Model model;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "id_type", referencedColumnName = "idType")
+    private Type type;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "id_brand", referencedColumnName = "idBrand")
+    private Brand brand;
+    @OneToMany (mappedBy = "idImage",fetch = FetchType.LAZY)
+    private Image image;
+
+    public Vehicle(String idVehicle, String plate, String description, Boolean reserved, Model model, Type type, Brand brand, Image image) {
+        this.idVehicle = idVehicle;
+        this.plate = plate;
+        this.description = description;
+        this.reserved = reserved;
+        this.model = model;
+        this.type = type;
+        this.brand = brand;
+        this.image = image;
+    }
+
+    public Vehicle(String plate, String description, Boolean reserved, Model model, Type type, Brand brand, Image image) {
+        this.plate = plate;
+        this.description = description;
+        this.reserved = reserved;
+        this.model = model;
+        this.type = type;
+        this.brand = brand;
+        this.image = image;
+    }
+
+    public Vehicle() {
+    }
 }
