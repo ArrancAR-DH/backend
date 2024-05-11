@@ -20,15 +20,19 @@ public class VehicleService {
         return vehicleRepository.save(vehicle);
     }
 
-    public Optional<Vehicle> getVehicleById(Long idVehicle) {
+    public Optional<Vehicle> findVehicleById(Long idVehicle) {
         return vehicleRepository.findById(idVehicle);
     }
 
-    public Optional<Vehicle> getVehicleByPlate(String plate) {
+    public Optional<Vehicle> findVehicleByPlate(String plate) {
         return vehicleRepository.findByPlate(plate);
     }
 
-    public Optional<Vehicle> getVehicleByBrand(Brand brand) {
+    public Optional<Vehicle> findVehicleByBrand(Brand brand) {
         return vehicleRepository.findByBrand(brand);
+    }
+
+    public void deleteVehicleById(Long id) {
+        vehicleRepository.deleteById(id);
     }
 }

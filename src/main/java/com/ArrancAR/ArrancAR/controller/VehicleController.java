@@ -2,6 +2,8 @@ package com.ArrancAR.ArrancAR.controller;
 
 
 import com.ArrancAR.ArrancAR.entity.Vehicle;
+import com.ArrancAR.ArrancAR.exception.DataIntegrityViolationException;
+import com.ArrancAR.ArrancAR.exception.ResourceNotFoundException;
 import com.ArrancAR.ArrancAR.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,18 +19,33 @@ public class VehicleController {
     private VehicleService vehicleService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Vehicle>> getVehicleById(@PathVariable Long id) {
-        Optional<Vehicle> foundVehicle = vehicleService.getVehicleById(id);
+    public ResponseEntity<Optional<Vehicle>> getVehicleById(@PathVariable Long id) throws ResourceNotFoundException {
+        Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(id);
         if(foundVehicle.isPresent()) {
             return ResponseEntity.ok(foundVehicle);
         } else {
-            return ResponseEntity.notFound().build();
+            throw new ResourceNotFoundException("This vehicle doesn't exist");
         }
     }
 
     @PostMapping
-    public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicle) {
-        return ResponseEntity.ok(vehicleService.addVehicle(vehicle));
+    public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicle) throws DataIntegrityViolationException {
+        Optional<Vehicle> foundVehicle = vehicleService.findVehicleByPlate(vehicle.getPlate());
+        if(foundVehicle.isPresent()){
+            throw new DataIntegrityViolationException("This vehicle already exists");
+        } else {
+            return ResponseEntity.ok(vehicleService.addVehicle(vehicle));
+        }
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteVehicle(@PathVariable Long id) throws ResourceNotFoundException {
+        Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(id);
+        if(foundVehicle.isPresent()) {
+            vehicleService.deleteVehicleById(id);
+            return ResponseEntity.ok("Vehicle successfully eliminated");
+        } else {
+            throw new ResourceNotFoundException("The vechile can't be eliminated because it doesn't exist");
+        }
+    }
 }

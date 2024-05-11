@@ -3,12 +3,15 @@ package com.ArrancAR.ArrancAR.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "vehicle")
 @Data
+@Getter
 
 public class Vehicle {
     @Id
@@ -54,5 +57,41 @@ public class Vehicle {
     }
 
     public Vehicle() {
+    }
+
+    public Long getIdVehicle() {
+        return idVehicle;
+    }
+
+    public String getPlate() {
+        return plate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Boolean getReserved() {
+        return reserved;
+    }
+
+    public Set<Booking> getBookings() {
+        return bookings;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public Set<Image> getImages() {
+        return images;
     }
 }
