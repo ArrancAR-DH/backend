@@ -1,8 +1,7 @@
 package com.ArrancAR.ArrancAR.entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
-
-import javax.persistence.*;
 
 @Entity
 @Table(name = "brand")
@@ -16,18 +15,17 @@ public class Brand {
     @Column
     private String name;
 
-    @Column
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id_image", referencedColumnName = "idImage")
     private Image image;
 
     public Brand(Long idBrand, String name, Image image) {
         this.idBrand = idBrand;
         this.name = name;
-        this.image = image;
     }
 
     public Brand(String name, Image image) {
         this.name = name;
-        this.image = image;
     }
 
     public Brand() {

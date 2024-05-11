@@ -2,7 +2,7 @@ package com.ArrancAR.ArrancAR.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "image")
@@ -11,6 +11,7 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long idImage;
 
     @Column

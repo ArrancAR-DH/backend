@@ -3,9 +3,7 @@ package com.ArrancAR.ArrancAR.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,7 +13,7 @@ import java.util.Set;
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String idVehicle;
+    private Long idVehicle;
     @Column
     private String plate;
     @Column
@@ -34,9 +32,9 @@ public class Vehicle {
     @JoinColumn (name = "id_brand", referencedColumnName = "idBrand")
     private Brand brand;
     @OneToMany (mappedBy = "idImage",fetch = FetchType.LAZY)
-    private Image image;
+    private Set<Image> images = new HashSet<>();
 
-    public Vehicle(String idVehicle, String plate, String description, Boolean reserved, Model model, Type type, Brand brand, Image image) {
+    public Vehicle(Long idVehicle, String plate, String description, Boolean reserved, Model model, Type type, Brand brand, Image image) {
         this.idVehicle = idVehicle;
         this.plate = plate;
         this.description = description;
@@ -44,7 +42,6 @@ public class Vehicle {
         this.model = model;
         this.type = type;
         this.brand = brand;
-        this.image = image;
     }
 
     public Vehicle(String plate, String description, Boolean reserved, Model model, Type type, Brand brand, Image image) {
@@ -54,7 +51,6 @@ public class Vehicle {
         this.model = model;
         this.type = type;
         this.brand = brand;
-        this.image = image;
     }
 
     public Vehicle() {

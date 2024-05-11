@@ -1,11 +1,10 @@
 package com.ArrancAR.ArrancAR.entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.persistence.*;
-
 @Entity
-@Table(name = "model")
+@Table (name = "model")
 @Data
 public class Model {
 
