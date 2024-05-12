@@ -18,6 +18,10 @@ public class Role {
     @Column
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "idUser")
+    private User user;
+
     public Role(Long idRole, String name, String description) {
         this.idRole = idRole;
         this.name = name;

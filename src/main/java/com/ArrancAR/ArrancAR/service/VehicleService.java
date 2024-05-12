@@ -7,6 +7,7 @@ import com.ArrancAR.ArrancAR.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,5 +35,9 @@ public class VehicleService {
 
     public void deleteVehicleById(Long id) {
         vehicleRepository.deleteById(id);
+    }
+
+    public List<Vehicle> listVehicles() {
+        return vehicleRepository.findAll();
     }
 }

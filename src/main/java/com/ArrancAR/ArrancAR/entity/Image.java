@@ -4,6 +4,8 @@ import lombok.Data;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "image")
 @Data
@@ -11,19 +13,20 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Long idImage;
+    private Long idImageList;
 
     @Column
-    private String url;
+    private List<String> imageUrls;
 
-    public Image(Long idImage, String url) {
-        this.idImage = idImage;
-        this.url = url;
+    public Image(Long idImageList, List<String> imageUrlList, Vehicle vehicle) {
+        this.idImageList = idImageList;
+        this.imageUrls = imageUrlList;
     }
-    public Image(String url) {
-        this.url = url;
+
+    public Image(List<String> imageUrlList, Vehicle vehicle) {
+        this.imageUrls = imageUrlList;
     }
+
     public Image() {
     }
 }

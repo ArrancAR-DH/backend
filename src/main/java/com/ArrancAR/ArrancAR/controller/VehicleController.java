@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,6 +27,11 @@ public class VehicleController {
         } else {
             throw new ResourceNotFoundException("This vehicle doesn't exist");
         }
+    }
+
+    @GetMapping("/all")
+    public List<Vehicle> listVehicles() {
+        return vehicleService.listVehicles();
     }
 
     @PostMapping
