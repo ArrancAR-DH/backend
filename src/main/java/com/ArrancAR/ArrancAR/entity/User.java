@@ -60,5 +60,7 @@ public class User {
     public User() {
     }
 
-
+    public Long getIdUser() {
+        return idUser;
+    }
 }
