@@ -1,0 +1,55 @@
+{
+	"info": {
+		"_postman_id": "e45703f6-cc12-4313-94f5-84d57de3560a",
+		"name": "ArrancAR",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "34141110"
+	},
+	"item": [
+		{
+			"name": "Get Vehicle by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/vehicle/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Vehicles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/vehicle/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Vehicle by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "localhost:8080/vehicle/delete/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Post Vehicle by ID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"plate\": \"ABC-DEF\",\r\n    \"description\": \"Camaro\",\r\n    \"reserved\": false,\r\n    \"model\": {\r\n        \"name\": \"Camaro\"\r\n    },\r\n    \"type\": {\r\n        \"name\": \"Deportivo\"\r\n    },\r\n    \"brand\": {\r\n        \"name\": \"Chevrolet\",\r\n        \"image\": {\r\n            \"imageUrls\": [\"image1\"]\r\n        }\r\n    },\r\n    \"image\": {\r\n            \"imageUrls\": [\"image1\",\"image2\",\"image3\"]\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/vehicle"
+			},
+			"response": []
+		}
+	]
+}
