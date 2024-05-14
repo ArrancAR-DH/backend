@@ -23,6 +23,8 @@ public class Vehicle {
     private String description;
     @Column
     private Boolean reserved;
+    @Column
+    private Double price;
 
     @OneToMany(mappedBy = "vehicle",fetch = FetchType.LAZY)
     private Set<Booking> bookings = new HashSet<>();
@@ -43,23 +45,29 @@ public class Vehicle {
     @JoinColumn (name = "id_imagelist", referencedColumnName = "idImageList")
     private Image image;
 
-    public Vehicle(Long idVehicle, String plate, String description, Boolean reserved, Model model, Type type, Brand brand, Image image) {
+    public Vehicle(Long idVehicle, String plate, String description, Boolean reserved, Double price, Set<Booking> bookings, Model model, Type type, Brand brand, Image image) {
         this.idVehicle = idVehicle;
         this.plate = plate;
         this.description = description;
         this.reserved = reserved;
+        this.price = price;
+        this.bookings = bookings;
         this.model = model;
         this.type = type;
         this.brand = brand;
+        this.image = image;
     }
 
-    public Vehicle(String plate, String description, Boolean reserved, Model model, Type type, Brand brand, Image image) {
+    public Vehicle(String plate, String description, Boolean reserved, Double price, Set<Booking> bookings, Model model, Type type, Brand brand, Image image) {
         this.plate = plate;
         this.description = description;
         this.reserved = reserved;
+        this.price = price;
+        this.bookings = bookings;
         this.model = model;
         this.type = type;
         this.brand = brand;
+        this.image = image;
     }
 
     public Vehicle() {
@@ -95,6 +103,14 @@ public class Vehicle {
 
     public void setReserved(Boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Set<Booking> getBookings() {
@@ -136,4 +152,6 @@ public class Vehicle {
     public void setImage(Image image) {
         this.image = image;
     }
+
+
 }
