@@ -13,18 +13,23 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idImageList;
+    private Long idImage;
 
     @Column
-    private List<String> imageUrls;
+    private String url;
 
-    public Image(Long idImageList, List<String> imageUrlList, Vehicle vehicle) {
-        this.idImageList = idImageList;
-        this.imageUrls = imageUrlList;
+    @ManyToOne
+    private Vehicle vehicle;
+
+    public Image(Long idImage, String url, Vehicle vehicle) {
+        this.idImage = idImage;
+        this.url = url;
+        this.vehicle = vehicle;
     }
 
-    public Image(List<String> imageUrlList, Vehicle vehicle) {
-        this.imageUrls = imageUrlList;
+    public Image(String url, Vehicle vehicle) {
+        this.url = url;
+        this.vehicle = vehicle;
     }
 
     public Image() {

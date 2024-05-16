@@ -1,11 +1,13 @@
 package com.ArrancAR.ArrancAR.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,7 +26,11 @@ public class Vehicle {
     @Column
     private Boolean reserved;
 
-    @OneToMany(mappedBy = "vehicle",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_vehicle")
+    private List<Img_urls> imgUrls;
+
+    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
     private Set<Booking> bookings = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -39,11 +45,7 @@ public class Vehicle {
     @JoinColumn (name = "id_brand", referencedColumnName = "idBrand")
     private Brand brand;
 
-    @OneToOne (cascade = CascadeType.ALL)
-    @JoinColumn (name = "id_imagelist", referencedColumnName = "idImageList")
-    private Image image;
-
-    public Vehicle(Long idVehicle, String plate, String description, Boolean reserved, Model model, Type type, Brand brand, Image image) {
+    public Vehicle(Long idVehicle, String plate, String description, Boolean reserved, Model model, Type type, Brand brand, List<Img_urls> imgUrls, Set<Booking> bookings) {
         this.idVehicle = idVehicle;
         this.plate = plate;
         this.description = description;
@@ -51,12 +53,16 @@ public class Vehicle {
         this.model = model;
         this.type = type;
         this.brand = brand;
+        this.imgUrls = imgUrls;
+        this.bookings = bookings;
     }
 
-    public Vehicle(String plate, String description, Boolean reserved, Model model, Type type, Brand brand, Image image) {
+    public Vehicle(String plate, String description, Boolean reserved, List<Img_urls> imgUrls, Set<Booking> bookings, Model model, Type type, Brand brand) {
         this.plate = plate;
         this.description = description;
         this.reserved = reserved;
+        this.imgUrls = imgUrls;
+        this.bookings = bookings;
         this.model = model;
         this.type = type;
         this.brand = brand;
@@ -97,6 +103,14 @@ public class Vehicle {
         this.reserved = reserved;
     }
 
+    public List<Img_urls> getImgUrls() {
+        return imgUrls;
+    }
+
+    public void setImgUrls(List<Img_urls> imgUrls) {
+        this.imgUrls = imgUrls;
+    }
+
     public Set<Booking> getBookings() {
         return bookings;
     }
@@ -127,13 +141,5 @@ public class Vehicle {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
     }
 }

@@ -37,6 +37,7 @@ public class VehicleController {
 
     @PostMapping
     public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicle) throws DataIntegrityViolationException {
+        System.out.println(vehicle);
         Optional<Vehicle> foundVehicle = vehicleService.findVehicleByPlate(vehicle.getPlate());
         if(foundVehicle.isPresent()){
             throw new DataIntegrityViolationException("This vehicle already exists");
