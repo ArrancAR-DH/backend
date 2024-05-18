@@ -10,7 +10,7 @@ public class Img_urls {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 255) // Adjust the length according to your needs
+    @Column(length = 255)
     private String url;
 
     public Img_urls(Long id, String url) {
