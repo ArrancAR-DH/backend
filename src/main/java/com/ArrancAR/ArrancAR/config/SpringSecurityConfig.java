@@ -1,9 +1,13 @@
 package com.ArrancAR.ArrancAR.config;
 
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +18,11 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableMethodSecurity
+@AllArgsConstructor
+
 public class SpringSecurityConfig {
+    private UserDetailsService userDetailsService;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -23,38 +31,20 @@ public class SpringSecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        http.csrf((csrf) -> csrf.disable())
-                .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers(HttpMethod.POST, "/vehicle").hasAnyRole("SUPER_ADMIN","ADMIN");
-                    authorize.requestMatchers(HttpMethod.GET, "/vehicle/all").hasRole("SUPER_ADMIN");
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authorize -> {
+                    authorize.requestMatchers(HttpMethod.POST, "/vehicle").hasAnyRole("SUPER_ADMIN", "ADMIN");
+                    authorize.requestMatchers(HttpMethod.GET, "/vehicle/all").hasAnyRole("SUPER_ADMIN", "ADMIN"); // Cambiado a hasAnyRole para incluir ADMIN
                     authorize.anyRequest().authenticated();
-                }).httpBasic(Customizer.withDefaults());
+                })
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-
-        UserDetails superAdmin = User.builder()
-                .username("superadmin")
-                .password(passwordEncoder().encode("superadmin"))
-                .roles("SUPER_ADMIN")
-                .build();
-
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("admin"))
-                .roles("ADMIN")
-                .build();
-
-        UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder().encode("user"))
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(superAdmin, admin, user);
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }
+
 
 }

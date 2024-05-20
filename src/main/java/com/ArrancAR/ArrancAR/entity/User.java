@@ -1,7 +1,7 @@
 package com.ArrancAR.ArrancAR.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,6 +9,10 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+
+
 
 public class User {
 
@@ -17,11 +21,13 @@ public class User {
     private Long idUser;
     @Column
     private String firstName;
+    @Column (nullable = false, unique = true)
+    private String userName;
     @Column
     private String lastName;
-    @Column
+    @Column (nullable = false)
     private String password;
-    @Column
+    @Column (nullable = false, unique = true)
     private String email;
     @ManyToOne
     @JoinColumn(name="id_role", referencedColumnName = "idRole")
@@ -39,25 +45,12 @@ public class User {
     }
 
 
-
-    public User(Long idUser, String firstName, String lastName, String password, String email, Role role, Set<Booking> bookings) {
-        this.idUser = idUser;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-    }
-
     public User(String firstName, String lastName, String password, String email, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.role = role;
-    }
-
-    public User() {
     }
 
     public Long getIdUser() {
