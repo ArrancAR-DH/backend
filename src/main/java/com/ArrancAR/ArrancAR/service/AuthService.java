@@ -1,5 +1,6 @@
 package com.ArrancAR.ArrancAR.service;
 
+import com.ArrancAR.ArrancAR.dto.LoginDto;
 import com.ArrancAR.ArrancAR.dto.RegisterDto;
 import com.ArrancAR.ArrancAR.entity.Role;
 import com.ArrancAR.ArrancAR.entity.User;
@@ -9,6 +10,9 @@ import com.ArrancAR.ArrancAR.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +53,16 @@ public class AuthService {
         userRepository.save(user);
 
         return "User Registered Successfully!.";
+    }
+    public String login(LoginDto loginDto) {
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginDto.getUsernameOrEmail(),
+                loginDto.getPassword()
+        ));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return "User logged-in successfully!.";
     }
 }
