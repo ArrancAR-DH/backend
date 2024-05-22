@@ -35,7 +35,9 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(HttpMethod.POST, "/vehicle").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.GET, "/vehicle/all").hasAnyRole("SUPER_ADMIN", "ADMIN"); // Cambiado a hasAnyRole para incluir ADMIN
+                    authorize.requestMatchers("/auth/**").permitAll();
                     authorize.anyRequest().authenticated();
+
                 })
                 .httpBasic(Customizer.withDefaults());
         return http.build();
