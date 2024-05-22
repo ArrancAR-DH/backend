@@ -3,9 +3,12 @@ package com.ArrancAR.ArrancAR.service;
 import com.ArrancAR.ArrancAR.entity.Feature;
 import com.ArrancAR.ArrancAR.repository.FeatureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class FeatureService {
 
     @Autowired
@@ -17,6 +20,10 @@ public class FeatureService {
 
     public Feature findFeatureById(Long id) {
         return featureRepository.findById(id).orElse(null);
+    }
+
+    public Optional<Feature> findFeatureByName(String name) {
+        return featureRepository.findByName(name);
     }
 
     public Feature saveFeature(Feature feature) {
@@ -35,4 +42,6 @@ public class FeatureService {
     public void deleteFeatureById(Long id) {
         featureRepository.deleteById(id);
     }
+
+
 }

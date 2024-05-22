@@ -40,4 +40,6 @@ public class VehicleService {
     public List<Vehicle> listVehicles() {
         return vehicleRepository.findAll();
     }
+
+
 }

@@ -50,8 +50,8 @@ public class Vehicle {
     @ManyToMany
     @JoinTable(
             name = "vehicle_features",
-            joinColumns = @JoinColumn(name = "id_vehicle"),
-            inverseJoinColumns = @JoinColumn(name = "id_feature")
+            joinColumns = @JoinColumn(name = "id_vehicle", referencedColumnName = "idVehicle"),
+            inverseJoinColumns = @JoinColumn(name = "id_feature", referencedColumnName = "idFeature")
     )
     private Set<Feature> features = new HashSet<>();
 

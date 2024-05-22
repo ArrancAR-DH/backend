@@ -16,9 +16,8 @@ import java.util.Set;
 public class Feature {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idFeature;
 
-    @Id
     @Column
     private String name;
 
@@ -26,7 +25,7 @@ public class Feature {
     private Set<Vehicle> vehicles = new HashSet<>();
 
     public Feature(Long id, String name, Set<Vehicle> vehicles) {
-        this.id = id;
+        this.idFeature = id;
         this.name = name;
         this.vehicles = vehicles;
     }
@@ -35,11 +34,11 @@ public class Feature {
     }
 
     public Long getId() {
-        return id;
+        return idFeature;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.idFeature = id;
     }
 
     public String getName() {
