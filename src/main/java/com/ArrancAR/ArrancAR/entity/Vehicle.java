@@ -47,29 +47,33 @@ public class Vehicle {
     @JoinColumn (name = "id_brand", referencedColumnName = "idBrand")
     private Brand brand;
 
-    public Vehicle(String plate, String description, Boolean reserved, Double price, List<Img_urls> imgUrls, Model model, Type type, Brand brand, Long idVehicle) {
+    @ManyToMany
+    @JoinTable(
+            name = "vehicle_features",
+            joinColumns = @JoinColumn(name = "id_vehicle"),
+            inverseJoinColumns = @JoinColumn(name = "id_feature")
+    )
+    private Set<Feature> features = new HashSet<>();
+
+    public Vehicle(Long idVehicle, String plate, String description, Boolean reserved, Double price, Model model, Type type, Brand brand) {
+        this.idVehicle = idVehicle;
         this.plate = plate;
         this.description = description;
         this.reserved = reserved;
         this.price = price;
-        this.imgUrls = imgUrls;
         this.model = model;
         this.type = type;
         this.brand = brand;
-        this.idVehicle = idVehicle;
     }
 
-    public Vehicle(String plate, String description, Boolean reserved, Double price, List<Img_urls> imgUrls, Model model, Type type, Brand brand, Long idVehicle, Set<Booking> bookings) {
+    public Vehicle(String plate, String description, Boolean reserved, Double price, Model model, Type type, Brand brand) {
         this.plate = plate;
         this.description = description;
         this.reserved = reserved;
         this.price = price;
-        this.imgUrls = imgUrls;
         this.model = model;
         this.type = type;
         this.brand = brand;
-        this.idVehicle = idVehicle;
-        this.bookings = bookings;
     }
 
     public Vehicle() {
@@ -153,5 +157,13 @@ public class Vehicle {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
+    }
+
+    public Set<Feature> getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(Set<Feature> features) {
+        this.features = features;
     }
 }
