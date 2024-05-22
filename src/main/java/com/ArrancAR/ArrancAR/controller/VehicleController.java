@@ -1,8 +1,10 @@
 package com.ArrancAR.ArrancAR.controller;
 
+import com.ArrancAR.ArrancAR.entity.Feature;
 import com.ArrancAR.ArrancAR.entity.Vehicle;
 import com.ArrancAR.ArrancAR.exception.DataIntegrityViolationException;
 import com.ArrancAR.ArrancAR.exception.ResourceNotFoundException;
+import com.ArrancAR.ArrancAR.service.FeatureService;
 import com.ArrancAR.ArrancAR.service.VehicleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,6 +27,8 @@ public class VehicleController {
 
     @Autowired
     private VehicleService vehicleService;
+    @Autowired
+    private FeatureService featureService;
 
     @Operation(summary = "List of id vehicles")
     @ApiResponses(value = {
@@ -103,7 +107,28 @@ public class VehicleController {
             vehicleService.deleteVehicleById(id);
             return ResponseEntity.ok("Vehicle successfully eliminated");
         } else {
-            throw new ResourceNotFoundException("The vechile can't be eliminated because it doesn't exist");
+            throw new ResourceNotFoundException("The vehicle can't be eliminated because it doesn't exist");
         }
     }
+
+    @PostMapping("{idVehicle}/features/{idFeature}")
+    public ResponseEntity<Vehicle> addFeatureToVehicle(@PathVariable Long idVehicle, Long idFeature) throws ResourceNotFoundException {
+        Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(idVehicle);
+        Optional<Feature> foundFeature = featureService.findFeatureById(idFeature);
+
+        if ( foundVehicle.isPresent() && foundFeature.isPresent() ){
+            Vehicle vehicle = foundVehicle.get();
+            Feature feature = foundFeature.get();
+            vehicle.getFeatures().add(feature);
+            return ResponseEntity.ok(vehicleService.addVehicle(vehicle));
+
+    } else {
+            throw new ResourceNotFoundException("The vehicle or the feature not found");
+        }
 }
+
+
+
+
+
+    }

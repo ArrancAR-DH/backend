@@ -2,7 +2,9 @@ package com.ArrancAR.ArrancAR.service;
 
 
 import com.ArrancAR.ArrancAR.entity.Brand;
+import com.ArrancAR.ArrancAR.entity.Feature;
 import com.ArrancAR.ArrancAR.entity.Vehicle;
+import com.ArrancAR.ArrancAR.repository.FeatureRepository;
 import com.ArrancAR.ArrancAR.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ public class VehicleService {
 
     @Autowired
     private VehicleRepository vehicleRepository;
+    private FeatureRepository featureRepository;
 
     public Vehicle addVehicle(Vehicle vehicle){
         return vehicleRepository.save(vehicle);
@@ -40,6 +43,5 @@ public class VehicleService {
     public List<Vehicle> listVehicles() {
         return vehicleRepository.findAll();
     }
-
 
 }

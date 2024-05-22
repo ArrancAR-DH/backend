@@ -23,7 +23,7 @@ public class FeatureController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Feature>> getFeatureByName(@PathVariable Long id) throws ResourceNotFoundException{
-        Optional<Feature> foundFeature = Optional.ofNullable(featureService.findFeatureById(id));
+        Optional<Feature> foundFeature = featureService.findFeatureById(id);
         if(foundFeature.isPresent()){
             return ResponseEntity.ok(foundFeature);
         } else {

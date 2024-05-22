@@ -18,8 +18,8 @@ public class FeatureService {
         return featureRepository.findAll();
     }
 
-    public Feature findFeatureById(Long id) {
-        return featureRepository.findById(id).orElse(null);
+    public Optional<Feature> findFeatureById(Long id) {
+        return featureRepository.findById(id);
     }
 
     public Optional<Feature> findFeatureByName(String name) {
