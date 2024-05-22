@@ -35,6 +35,14 @@ public class User {
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private Set<Booking> bookings = new HashSet<>();
 
+    public User(Long idUser, String userName, String password, String email, Role role) {
+        this.idUser = idUser;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
 
     public String getPassword() {
         return password;
@@ -45,13 +53,7 @@ public class User {
     }
 
 
-    public User(String firstName, String lastName, String password, String email, Role role) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-    }
+
 
     public Long getIdUser() {
         return idUser;

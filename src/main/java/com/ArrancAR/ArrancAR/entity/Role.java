@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 @Table(name = "role")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Role {
 
@@ -21,10 +20,12 @@ public class Role {
     @Column
     private String description;
 
-
-    public Role(String name, String description) {
+    public Role(Long idRole, String name, String description) {
+        this.idRole = idRole;
         this.name = name;
         this.description = description;
     }
+
+
 
 }
