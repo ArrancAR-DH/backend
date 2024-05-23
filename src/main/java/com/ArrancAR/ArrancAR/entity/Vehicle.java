@@ -35,23 +35,23 @@ public class Vehicle {
     @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
     private Set<Booking> bookings = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn (name = "id_model", referencedColumnName = "idModel")
+    @ManyToOne
+    @JoinColumn(name = "id_model")
     private Model model;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn (name = "id_type", referencedColumnName = "idType")
+    @ManyToOne
+    @JoinColumn(name = "id_type")
     private Type type;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn (name = "id_brand", referencedColumnName = "idBrand")
+    @ManyToOne
+    @JoinColumn(name = "id_brand")
     private Brand brand;
 
     @ManyToMany
     @JoinTable(
             name = "vehicle_features",
             joinColumns = @JoinColumn(name = "id_vehicle", referencedColumnName = "idVehicle"),
-            inverseJoinColumns = @JoinColumn(name = "id_feature", referencedColumnName = "idFeature")
+            inverseJoinColumns = @JoinColumn(name = "id_feature", referencedColumnName = "idFeature" )
     )
     private Set<Feature> features = new HashSet<>();
 

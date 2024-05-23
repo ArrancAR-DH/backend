@@ -3,6 +3,9 @@ package com.ArrancAR.ArrancAR.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table (name = "model")
 @Data
@@ -14,6 +17,9 @@ public class Model {
 
     @Column
     private String name;
+
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    private List<Vehicle> vehicles = new ArrayList<>();
 
     public Model(Long idModel, String name) {
         this.idModel = idModel;

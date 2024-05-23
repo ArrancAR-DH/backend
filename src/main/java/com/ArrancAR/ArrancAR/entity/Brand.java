@@ -3,6 +3,10 @@ package com.ArrancAR.ArrancAR.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 @Entity
 @Table(name = "brand")
 @Data
@@ -18,6 +22,9 @@ public class Brand {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_image", referencedColumnName = "id")
     private Img_urls imgUrl;
+
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    private List<Vehicle> vehicles = new ArrayList<>();
 
     public Brand(Long idBrand, String name, Img_urls imgUrl) {
         this.idBrand = idBrand;
