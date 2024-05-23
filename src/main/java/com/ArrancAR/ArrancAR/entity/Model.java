@@ -18,9 +18,6 @@ public class Model {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
-    private List<Vehicle> vehicles = new ArrayList<>();
-
     public Model(Long idModel, String name) {
         this.idModel = idModel;
         this.name = name;
