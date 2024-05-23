@@ -34,7 +34,8 @@ public class SpringSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(HttpMethod.POST, "/vehicle").hasAnyRole("SUPER_ADMIN", "ADMIN");
-                    authorize.requestMatchers(HttpMethod.GET, "/vehicle/all").hasAnyRole("SUPER_ADMIN", "ADMIN"); // Cambiado a hasAnyRole para incluir ADMIN
+                    authorize.requestMatchers(HttpMethod.DELETE, "/vehicle/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
+                    authorize.requestMatchers(HttpMethod.GET, "/vehicle/**").permitAll(); // Cambiado a hasAnyRole para incluir ADMIN
                     authorize.requestMatchers("/auth/**").permitAll();
                     authorize.anyRequest().authenticated();
                     authorize.requestMatchers(HttpMethod.OPTIONS,"**").permitAll();
