@@ -127,12 +127,13 @@ public class VehicleController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<String> updateVehicle(@RequestBody Vehicle vehicle) {
-        Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(vehicle.getIdVehicle());
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateVehicle(@RequestBody Vehicle vehicle, @PathVariable Long id) {
+        Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(id);
         if(foundVehicle.isPresent()) {
+            vehicle.setIdVehicle(id);
             vehicleService.updateVehicle(vehicle);
-            return ResponseEntity.ok("Vehicle"+ vehicle.getPlate() + "updated");
+            return ResponseEntity.ok("Updated vehicle with ID: "+ vehicle.getIdVehicle());
         }
         return ResponseEntity.badRequest().body("Vehicle not found");
     }
