@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Table(name = "vehicle")
 @Data
 @Getter
+@Setter
 
 public class Vehicle {
     @Id
@@ -36,16 +38,16 @@ public class Vehicle {
     private Set<Booking> bookings = new HashSet<>();
 
     @ManyToOne
+    @JoinColumn(name = "id_brand")
+    private Brand brand;
+
+    @ManyToOne
     @JoinColumn(name = "id_model")
     private Model model;
 
     @ManyToOne
     @JoinColumn(name = "id_type")
     private Type type;
-
-    @ManyToOne
-    @JoinColumn(name = "id_brand")
-    private Brand brand;
 
     @ManyToMany
     @JoinTable(
@@ -84,93 +86,5 @@ public class Vehicle {
     }
 
     public Vehicle() {
-    }
-
-    public Long getIdVehicle() {
-        return idVehicle;
-    }
-
-    public void setIdVehicle(Long idVehicle) {
-        this.idVehicle = idVehicle;
-    }
-
-    public String getPlate() {
-        return plate;
-    }
-
-    public void setPlate(String plate) {
-        this.plate = plate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Boolean getReserved() {
-        return reserved;
-    }
-
-    public void setReserved(Boolean reserved) {
-        this.reserved = reserved;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public List<Img_urls> getImgUrls() {
-        return imgUrls;
-    }
-
-    public void setImgUrls(List<Img_urls> imgUrls) {
-        this.imgUrls = imgUrls;
-    }
-
-    public Set<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(Set<Booking> bookings) {
-        this.bookings = bookings;
-    }
-
-    public Model getModel() {
-        return model;
-    }
-
-    public void setModel(Model model) {
-        this.model = model;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public Brand getBrand() {
-        return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
-
-    public Set<Feature> getFeatures() {
-        return features;
-    }
-
-    public void setFeatures(Set<Feature> features) {
-        this.features = features;
     }
 }

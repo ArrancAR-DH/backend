@@ -4,6 +4,7 @@ package com.ArrancAR.ArrancAR.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +13,7 @@ import java.util.Set;
 @Table(name = "features")
 @Data
 @Getter
+@Setter
 
 public class Feature {
     @Id
@@ -31,29 +33,5 @@ public class Feature {
     }
 
     public Feature() {
-    }
-
-    public Long getId() {
-        return idFeature;
-    }
-
-    public void setId(Long id) {
-        this.idFeature = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Vehicle> getVehicles() {
-        return vehicles;
-    }
-
-    public void setVehicles(Set<Vehicle> vehicles) {
-        this.vehicles = vehicles;
     }
 }

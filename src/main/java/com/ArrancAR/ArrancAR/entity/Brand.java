@@ -3,6 +3,8 @@ package com.ArrancAR.ArrancAR.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,6 +14,8 @@ import java.util.Set;
 @Entity
 @Table(name = "brand")
 @Data
+@Getter
+@Setter
 public class Brand {
 
     @Id
@@ -36,21 +40,4 @@ public class Brand {
 
     public Brand() {
     }
-
-    public Long getIdBrand() {
-        return idBrand;
-    }
-
-    public void setIdBrand(Long idBrand) {
-        this.idBrand = idBrand;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
 }

@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @Tag(name= "Feature")
 @RestController
+@CrossOrigin(origins = "http://localhost:5173/")
 @RequestMapping("/feature")
 public class FeatureController {
 

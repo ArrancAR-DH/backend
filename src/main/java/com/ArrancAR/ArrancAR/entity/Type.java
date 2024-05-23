@@ -3,6 +3,8 @@ package com.ArrancAR.ArrancAR.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.Set;
 @Entity
 @Table(name = "type")
 @Data
+@Getter
+@Setter
 public class Type {
 
     @Id

@@ -52,7 +52,7 @@ public class VehicleController {
         }
     }
 
-   @Operation(summary = "List of all vehicles")
+    @Operation(summary = "List of all vehicles")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Vehicle list obtained correctly",
                     content = {@Content(mediaType = "application/json",
@@ -67,7 +67,7 @@ public class VehicleController {
         return vehicleService.listVehicles();
     }
 
-   @Operation(summary = "Registration of a new car")
+    @Operation(summary = "Registration of a new car")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Vehicle stored correctly",
                     content = {@Content(mediaType = "application/json",
@@ -88,7 +88,7 @@ public class VehicleController {
         }
     }
 
-   @Operation(summary = "Deleting a vehicle by ID")
+    @Operation(summary = "Deleting a vehicle by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Vehicle removed correctly",
                     content = {@Content(mediaType = "application/json",
@@ -125,10 +125,15 @@ public class VehicleController {
     } else {
             throw new ResourceNotFoundException("The vehicle or the feature not found");
         }
-}
-
-
-
-
-
     }
+
+    @PutMapping
+    public ResponseEntity<String> updateVehicle(@RequestBody Vehicle vehicle) {
+        Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(vehicle.getIdVehicle());
+        if(foundVehicle.isPresent()) {
+            vehicleService.updateVehicle(vehicle);
+            return ResponseEntity.ok("Vehicle"+ vehicle.getPlate() + "updated");
+        }
+        return ResponseEntity.badRequest().body("Vehicle not found");
+    }
+}
