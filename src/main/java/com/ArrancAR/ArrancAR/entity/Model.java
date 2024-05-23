@@ -1,10 +1,12 @@
 package com.ArrancAR.ArrancAR.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table (name = "model")
@@ -17,6 +19,10 @@ public class Model {
 
     @Column
     private String name;
+
+    @OneToMany(mappedBy = "model",fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<Vehicle> vehicles;
 
     public Model(Long idModel, String name) {
         this.idModel = idModel;

@@ -35,15 +35,15 @@ public class Vehicle {
     @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
     private Set<Booking> bookings = new HashSet<>();
 
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_model")
     private Model model;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_type")
     private Type type;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_brand")
     private Brand brand;
 
@@ -71,6 +71,13 @@ public class Vehicle {
         this.description = description;
         this.reserved = reserved;
         this.price = price;
+        this.model = model;
+        this.type = type;
+        this.brand = brand;
+    }
+
+    public Vehicle(String plate, Model model, Type type, Brand brand) {
+        this.plate = plate;
         this.model = model;
         this.type = type;
         this.brand = brand;

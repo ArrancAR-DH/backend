@@ -1,7 +1,6 @@
 package com.ArrancAR.ArrancAR.service;
 
 import com.ArrancAR.ArrancAR.entity.Brand;
-import com.ArrancAR.ArrancAR.entity.Vehicle;
 import com.ArrancAR.ArrancAR.repository.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,5 @@ public class BrandService {
     public Optional<Brand> findBrandByName(String name) { return brandRepository.findByName(name); }
     public Brand addBrand(Brand brand){ return brandRepository.save(brand); }
     public List<Brand> listBrands() { return brandRepository.findAll();}
-
-
 
 }
