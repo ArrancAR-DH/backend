@@ -110,9 +110,9 @@ public class VehicleController {
             throw new ResourceNotFoundException("The vehicle can't be eliminated because it doesn't exist");
         }
     }
-/*
+
     @PostMapping("{idVehicle}/features/{idFeature}")
-    public ResponseEntity<Vehicle> addFeatureToVehicle(@PathVariable Long idVehicle, Long idFeature) throws ResourceNotFoundException {
+    public ResponseEntity<Vehicle> addFeatureToVehicle(@PathVariable Long idVehicle, @PathVariable Long idFeature) throws ResourceNotFoundException {
         Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(idVehicle);
         Optional<Feature> foundFeature = featureService.findFeatureById(idFeature);
 
@@ -127,7 +127,21 @@ public class VehicleController {
         }
     }
 
-*/
+    @DeleteMapping("{idVehicle}/deletefeature/{idFeature}")
+    public ResponseEntity<Vehicle> deleteFeatureFromVehicle(@PathVariable Long idVehicle, @PathVariable Long idFeature) throws ResourceNotFoundException {
+        Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(idVehicle);
+        Optional<Feature> foundFeature = featureService.findFeatureById(idFeature);
+
+        if ( foundVehicle.isPresent() && foundFeature.isPresent() ){
+            Vehicle vehicle = foundVehicle.get();
+            Feature feature = foundFeature.get();
+            vehicle.getFeatures().remove(feature);
+            return ResponseEntity.ok(vehicleService.addVehicle(vehicle));
+
+        } else {
+            throw new ResourceNotFoundException("The vehicle or the feature not found");
+        }
+    }
 
     @Operation(summary = "Updating a vehicle")
     @ApiResponses(value = {
@@ -141,6 +155,7 @@ public class VehicleController {
             @ApiResponse(responseCode = "500", description = "Server error",
                     content = @Content)
     })
+
     @PutMapping("/{id}")
     public ResponseEntity<String> updateVehicle(@RequestBody Vehicle vehicle, @PathVariable Long id) {
         Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(id);

@@ -47,5 +47,4 @@ public class VehicleService {
     public void updateVehicle(Vehicle vehicle) {
         vehicleRepository.save(vehicle);
     }
-
 }
