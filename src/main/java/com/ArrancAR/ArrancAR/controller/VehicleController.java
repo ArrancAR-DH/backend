@@ -95,7 +95,7 @@ public class VehicleController {
                             schema = @Schema(implementation = String.class))}),
             @ApiResponse(responseCode = "400", description = "invalid id",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "Vehicle not foundo",
+            @ApiResponse(responseCode = "404", description = "Vehicle not found",
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Server error",
                     content = @Content)
@@ -110,7 +110,7 @@ public class VehicleController {
             throw new ResourceNotFoundException("The vehicle can't be eliminated because it doesn't exist");
         }
     }
-
+/*
     @PostMapping("{idVehicle}/features/{idFeature}")
     public ResponseEntity<Vehicle> addFeatureToVehicle(@PathVariable Long idVehicle, Long idFeature) throws ResourceNotFoundException {
         Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(idVehicle);
@@ -127,6 +127,20 @@ public class VehicleController {
         }
     }
 
+*/
+
+    @Operation(summary = "Updating a vehicle")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Vehicle updated correctly",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Vehicle.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Vehicle not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Server error",
+                    content = @Content)
+    })
     @PutMapping("/{id}")
     public ResponseEntity<String> updateVehicle(@RequestBody Vehicle vehicle, @PathVariable Long id) {
         Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(id);
