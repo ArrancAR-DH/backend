@@ -1,11 +1,13 @@
 package com.ArrancAR.ArrancAR.entity;
 
-import lombok.Data;
+import lombok.*;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "role")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Role {
 
     @Id
@@ -18,21 +20,12 @@ public class Role {
     @Column
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "idUser")
-    private User user;
-
     public Role(Long idRole, String name, String description) {
         this.idRole = idRole;
         this.name = name;
         this.description = description;
     }
 
-    public Role(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
 
-    public Role() {
-    }
+
 }
