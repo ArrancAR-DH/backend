@@ -2,6 +2,7 @@ package com.ArrancAR.ArrancAR.controller;
 
 import com.ArrancAR.ArrancAR.entity.User;
 
+import com.ArrancAR.ArrancAR.entity.Vehicle;
 import com.ArrancAR.ArrancAR.exception.DataIntegrityViolationException;
 import com.ArrancAR.ArrancAR.exception.ResourceNotFoundException;
 import com.ArrancAR.ArrancAR.service.UserService;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Tag(name= "User")
@@ -43,6 +45,10 @@ public class UserController {
         } else {
             throw new ResourceNotFoundException("This user doesn't exist");
         }
+    }
+    @GetMapping("/all")
+    public List<User> listVehicles() {
+        return userService.listUsers();
     }
 
     @Operation(summary = "Registration of a new user")

@@ -2,6 +2,7 @@ package com.ArrancAR.ArrancAR.controller;
 
 import com.ArrancAR.ArrancAR.dto.LoginDto;
 import com.ArrancAR.ArrancAR.dto.RegisterDto;
+import com.ArrancAR.ArrancAR.entity.User;
 import com.ArrancAR.ArrancAR.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,8 @@ public class AuthController {
     }
     @PostMapping("/login")
 
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
-        String response = authService.login(loginDto);
+    public ResponseEntity<User> login(@RequestBody LoginDto loginDto){
+        User response = authService.login(loginDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

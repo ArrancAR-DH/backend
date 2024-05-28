@@ -27,6 +27,7 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
 
+
     public String register (RegisterDto registerDto) {
         // check username is already exists in database
         if(userRepository.existsByUserName(registerDto.getUsername())){
@@ -54,7 +55,22 @@ public class AuthService {
 
         return "User Registered Successfully!.";
     }
-    public String login(LoginDto loginDto) {
+    public User login(LoginDto loginDto) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginDto.getUsernameOrEmail(),
+                loginDto.getPassword()
+        ));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Obtener el usuario autenticado
+        String usernameOrEmail = loginDto.getUsernameOrEmail();
+        User user = userRepository.findByUserNameOrEmail(usernameOrEmail, usernameOrEmail)
+                .orElseThrow(() -> new RuntimeException("User not found with username or email: " + usernameOrEmail));
+
+        return user;
+    }
+    /*public String login(LoginDto loginDto) {
 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(),
@@ -64,5 +80,5 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return "User logged-in successfully!.";
-    }
+    }*/
 }
