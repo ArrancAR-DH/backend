@@ -22,6 +22,7 @@ import java.util.Optional;
 @Tag(name= "User")
 @RestController
 @RequestMapping("/user")
+@CrossOrigin("*")
 public class UserController {
     @Autowired
     private UserService userService;
