@@ -23,6 +23,8 @@ public class Vehicle {
     @Column
     private String description;
     @Column
+    private String year;
+    @Column
     private Boolean reserved;
     @Column
     private Double price;
