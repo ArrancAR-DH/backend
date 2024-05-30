@@ -135,7 +135,7 @@ public class VehicleController {
         if ( foundVehicle.isPresent() && foundFeature.isPresent() ){
             Vehicle vehicle = foundVehicle.get();
             Feature feature = foundFeature.get();
-            vehicle.getFeatures().remove(feature);
+            vehicle.addFeature(feature);
             return ResponseEntity.ok(vehicleService.addVehicle(vehicle));
 
         } else {
