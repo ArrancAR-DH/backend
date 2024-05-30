@@ -119,7 +119,7 @@ public class VehicleController {
         if ( foundVehicle.isPresent() && foundFeature.isPresent() ){
             Vehicle vehicle = foundVehicle.get();
             Feature feature = foundFeature.get();
-            vehicle.getFeatures().add(feature);
+            vehicle.addFeature(feature);
             return ResponseEntity.ok(vehicleService.addVehicle(vehicle));
 
     } else {
@@ -135,7 +135,7 @@ public class VehicleController {
         if ( foundVehicle.isPresent() && foundFeature.isPresent() ){
             Vehicle vehicle = foundVehicle.get();
             Feature feature = foundFeature.get();
-            vehicle.addFeature(feature);
+            vehicle.getFeatures().remove(feature);
             return ResponseEntity.ok(vehicleService.addVehicle(vehicle));
 
         } else {
