@@ -26,8 +26,7 @@ jobs:
           # Stop existing service (if any)
           sudo systemctl stop arrancar-api.service || true
           cp /home/ubuntu/back/application.properties ./src/main/resources/application.properties
-          mvn package
-
+          mvn clean install
   deploy:
     runs-on: self-hosted
     needs: build
