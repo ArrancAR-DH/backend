@@ -33,8 +33,9 @@ public class Vehicle {
     @JoinColumn(name = "id_vehicle")
     private List<Img_urls> imgUrls;
 
-    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
-    private Set<Booking> bookings = new HashSet<>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_vehicle")
+    private List<Booking> bookings = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "id_brand")

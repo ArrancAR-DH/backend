@@ -33,6 +33,7 @@ public class User {
     @ManyToOne
     @JoinColumn(name="id_role", referencedColumnName = "idRole")
     private Role role;
+
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private Set<Booking> bookings = new HashSet<>();
 
