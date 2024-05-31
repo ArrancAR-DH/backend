@@ -36,17 +36,9 @@ public class Vehicle {
     @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
     private Set<Booking> bookings = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "id_brand")
-    private Brand brand;
-
-    @ManyToOne
-    @JoinColumn(name = "id_model")
-    private Model model;
-
-    @ManyToOne
-    @JoinColumn(name = "id_type")
-    private Type type;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private List<Category> categories;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "feature_id")
@@ -59,6 +51,16 @@ public class Vehicle {
         }
         else {
             features.add(feature);
+        }
+    }
+
+    public void addCategory (Category category) {
+        if (Objects.isNull(categories)) {
+            categories = new ArrayList<>();
+            categories.add(category);
+        }
+        else {
+             categories.add(category);
         }
     }
 }

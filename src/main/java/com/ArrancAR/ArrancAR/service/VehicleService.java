@@ -1,8 +1,6 @@
 package com.ArrancAR.ArrancAR.service;
 
 
-import com.ArrancAR.ArrancAR.entity.Brand;
-import com.ArrancAR.ArrancAR.entity.Feature;
 import com.ArrancAR.ArrancAR.entity.Vehicle;
 import com.ArrancAR.ArrancAR.repository.FeatureRepository;
 import com.ArrancAR.ArrancAR.repository.VehicleRepository;
@@ -30,10 +28,6 @@ public class VehicleService {
 
     public Optional<Vehicle> findVehicleByPlate(String plate) {
         return vehicleRepository.findByPlate(plate);
-    }
-
-    public Optional<Vehicle> findVehicleByBrand(Brand brand) {
-        return vehicleRepository.findByBrand(brand);
     }
 
     public void deleteVehicleById(Long id) {

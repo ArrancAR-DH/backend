@@ -1,9 +1,11 @@
 package com.ArrancAR.ArrancAR.controller;
 
+import com.ArrancAR.ArrancAR.entity.Category;
 import com.ArrancAR.ArrancAR.entity.Feature;
 import com.ArrancAR.ArrancAR.entity.Vehicle;
 import com.ArrancAR.ArrancAR.exception.DataIntegrityViolationException;
 import com.ArrancAR.ArrancAR.exception.ResourceNotFoundException;
+import com.ArrancAR.ArrancAR.service.CategoryService;
 import com.ArrancAR.ArrancAR.service.FeatureService;
 import com.ArrancAR.ArrancAR.service.VehicleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,6 +31,9 @@ public class VehicleController {
     private VehicleService vehicleService;
     @Autowired
     private FeatureService featureService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Operation(summary = "List of id vehicles")
     @ApiResponses(value = {
@@ -165,5 +170,37 @@ public class VehicleController {
             return ResponseEntity.ok("Updated vehicle with ID: "+ vehicle.getIdVehicle());
         }
         return ResponseEntity.badRequest().body("Vehicle not found");
+    }
+
+    @PostMapping("{idVehicle}/categories/{idCategory}")
+    public ResponseEntity<Vehicle> addCategoryToVehicle(@PathVariable Long idVehicle, @PathVariable Long idCategory) throws ResourceNotFoundException {
+        Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(idVehicle);
+        Optional<Category> foundCategory = categoryService.findCategoryById(idCategory);
+
+        if ( foundVehicle.isPresent() && foundCategory.isPresent() ){
+            Vehicle vehicle = foundVehicle.get();
+            Category category = foundCategory.get();
+            vehicle.addCategory(category);
+            return ResponseEntity.ok(vehicleService.addVehicle(vehicle));
+
+        } else {
+            throw new ResourceNotFoundException("The vehicle or the category not found");
+        }
+    }
+
+    @DeleteMapping("{idVehicle}/deletecategory/{idCategory}")
+    public ResponseEntity<Vehicle> deleteCategoryFromVehicle(@PathVariable Long idVehicle, @PathVariable Long idCategory) throws ResourceNotFoundException {
+        Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(idVehicle);
+        Optional<Category> foundCategory = categoryService.findCategoryById(idCategory);
+
+        if ( foundVehicle.isPresent() && foundCategory.isPresent() ){
+            Vehicle vehicle = foundVehicle.get();
+            Category category = foundCategory.get();
+            vehicle.getCategories().remove(category);
+            return ResponseEntity.ok(vehicleService.addVehicle(vehicle));
+
+        } else {
+            throw new ResourceNotFoundException("The vehicle or the category not found");
+        }
     }
 }
