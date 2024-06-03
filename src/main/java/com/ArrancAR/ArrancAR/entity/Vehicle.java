@@ -30,6 +30,7 @@ public class Vehicle {
     @Column
     private Double price;
 
+    //ESTE ES UN COMENTARIO PARA LA PREUBA DE INFRA DE JAVI GOD
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_vehicle")
     private List<Img_urls> imgUrls;
