@@ -1,5 +1,6 @@
 package com.ArrancAR.ArrancAR.controller;
 
+import com.ArrancAR.ArrancAR.dto.LikeDto;
 import com.ArrancAR.ArrancAR.entity.User;
 
 import com.ArrancAR.ArrancAR.entity.Vehicle;
@@ -48,7 +49,7 @@ public class UserController {
         }
     }
     @GetMapping("/all")
-    public List<User> listVehicles() {
+    public List<User> lisUsers() {
         return userService.listUsers();
     }
 
@@ -93,6 +94,35 @@ public class UserController {
         }else{
             throw new ResourceNotFoundException("User doesn't exist");
         }
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity<User> likeVehicle(@RequestBody LikeDto likeDto) {
+        Optional<User> foundUser= userService.findUserById(likeDto.getIdUser());
+        if(foundUser.isPresent()) {
+            User user = foundUser.get();
+            user.addLikedVehicle(likeDto.getIdVehicle());
+            return ResponseEntity.ok(userService.addUser(user));
+        }
+        return null;
+    }
+
+    @GetMapping("/likes/{idUser}")
+    public List<Long> listLikes(@PathVariable Long idUser) {
+        Optional<User> foundUser= userService.findUserById(idUser);
+        User user = foundUser.get();
+        return user.getLikedVehicleIds();
+    }
+
+    @DeleteMapping("/dislike")
+    public ResponseEntity<User> dislikeVehicle(@RequestBody LikeDto likeDto) {
+        Optional<User> foundUser= userService.findUserById(likeDto.getIdUser());
+        if(foundUser.isPresent()) {
+            User user = foundUser.get();
+            user.getLikedVehicleIds().remove(likeDto.getIdVehicle());
+            return ResponseEntity.ok(userService.addUser(user));
+        }
+        return null;
     }
 
 }
