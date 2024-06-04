@@ -30,8 +30,4 @@ public class UserService {
     public void updateUser(User user){
         userRepository.save(user);
     }
-    public void dislikeVehicle(User user,Long idVehicle) {
-
-    }
-
 }
