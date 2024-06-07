@@ -1,8 +1,10 @@
 package com.ArrancAR.ArrancAR.controller;
 
 import com.ArrancAR.ArrancAR.entity.Type;
+import com.ArrancAR.ArrancAR.entity.Type;
 import com.ArrancAR.ArrancAR.entity.Vehicle;
 import com.ArrancAR.ArrancAR.exception.DataIntegrityViolationException;
+import com.ArrancAR.ArrancAR.exception.ResourceNotFoundException;
 import com.ArrancAR.ArrancAR.service.TypeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -62,7 +64,7 @@ public class TypeController {
         }
     }
 
-    /*
+    
     @Operation(summary = "Deleting a Type by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Type removed correctly",
@@ -75,5 +77,16 @@ public class TypeController {
             @ApiResponse(responseCode = "500", description = "Server error",
                     content = @Content)
     })
-    */
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteType(@PathVariable Long id) throws ResourceNotFoundException {
+        Optional<Type> foundType = typeService.findTypeById(id);
+        if(foundType.isPresent()) {
+            typeService.deleteTypeById(id);
+            return ResponseEntity.ok("Type successfully eliminated");
+        } else {
+            throw new ResourceNotFoundException("The type can't be eliminated because it doesn't exist");
+        }
+    }
+    
 }
