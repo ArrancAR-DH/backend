@@ -81,6 +81,7 @@ public class ModelController {
     public ResponseEntity<String> deleteModel(@PathVariable Long id) throws ResourceNotFoundException {
         Optional<Model> foundModel = modelService.findModelById(id);
         if(foundModel.isPresent()) {
+
             modelService.deleteModelById(id);
             return ResponseEntity.ok("Model successfully eliminated");
         } else {
