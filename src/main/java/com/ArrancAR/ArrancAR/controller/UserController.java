@@ -85,6 +85,7 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Server error",
                     content = @Content)
     })
+
     @PutMapping("update")
     public ResponseEntity<String> updateUser(@RequestBody User user) throws ResourceNotFoundException {
         Optional<User> foundUser= userService.findUserById(user.getIdUser());
@@ -97,12 +98,13 @@ public class UserController {
     }
 
     @PostMapping("/like")
-    public ResponseEntity<User> likeVehicle(@RequestBody LikeDto likeDto) {
+    public ResponseEntity<List<Long>> likeVehicle(@RequestBody LikeDto likeDto) {
         Optional<User> foundUser= userService.findUserById(likeDto.getIdUser());
         if(foundUser.isPresent()) {
             User user = foundUser.get();
             user.addLikedVehicle(likeDto.getIdVehicle());
-            return ResponseEntity.ok(userService.addUser(user));
+            userService.addUser(user);
+            return ResponseEntity.ok(user.getLikedVehicleIds());
         }
         return null;
     }
@@ -115,12 +117,13 @@ public class UserController {
     }
 
     @DeleteMapping("/dislike")
-    public ResponseEntity<User> dislikeVehicle(@RequestBody LikeDto likeDto) {
+    public ResponseEntity<List<Long>> dislikeVehicle(@RequestBody LikeDto likeDto) {
         Optional<User> foundUser= userService.findUserById(likeDto.getIdUser());
         if(foundUser.isPresent()) {
             User user = foundUser.get();
             user.getLikedVehicleIds().remove(likeDto.getIdVehicle());
-            return ResponseEntity.ok(userService.addUser(user));
+            userService.addUser(user);
+            return ResponseEntity.ok(user.getLikedVehicleIds());
         }
         return null;
     }
