@@ -47,11 +47,11 @@ public class SpringSecurityConfig {
                     authorize.requestMatchers(HttpMethod.POST, "/feature").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.POST, "/vehicle").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.POST, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
-                    authorize.requestMatchers(HttpMethod.POST, "/user/like").hasAnyRole("USER");
+                    authorize.requestMatchers(HttpMethod.POST, "/user/like").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.GET, "/vehicle/**").permitAll(); // Cambiado a hasAnyRole para incluir ADMIN
                     authorize.requestMatchers(HttpMethod.GET, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
-                    authorize.requestMatchers(HttpMethod.POST, "/notification/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
-
+                    authorize.requestMatchers(HttpMethod.POST, "/notification/**").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST, "/login").permitAll();
                     authorize.requestMatchers("/auth/**").permitAll();
                     authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     authorize.anyRequest().authenticated();
@@ -64,6 +64,4 @@ public class SpringSecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
-
 }
