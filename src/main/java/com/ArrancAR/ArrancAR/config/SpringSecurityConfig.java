@@ -37,17 +37,16 @@ public class SpringSecurityConfig {
                     authorize.requestMatchers(HttpMethod.PUT, "/user/update").hasAnyRole("SUPER_ADMIN");
                     authorize.requestMatchers(HttpMethod.DELETE, "/vehicle/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.DELETE, "/feature/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
-                    authorize.requestMatchers(HttpMethod.DELETE, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
-                    authorize.requestMatchers(HttpMethod.DELETE, "/user/dislike").hasAnyRole("USER");
+                    authorize.requestMatchers(HttpMethod.DELETE, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
                     authorize.requestMatchers(HttpMethod.DELETE, "/brand/delete").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.DELETE, "/model/delete").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.DELETE, "/type/delete").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.POST, "/brand").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.POST, "/model").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.POST, "/feature").hasAnyRole("SUPER_ADMIN", "ADMIN");
-                    authorize.requestMatchers(HttpMethod.POST, "/vehicle").hasAnyRole("SUPER_ADMIN", "ADMIN");
-                    authorize.requestMatchers(HttpMethod.POST, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
-                    authorize.requestMatchers(HttpMethod.POST, "/user/like").hasAnyRole("SUPER_ADMIN", "ADMIN");
+                    authorize.requestMatchers(HttpMethod.POST, "/vehicle").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
+                    authorize.requestMatchers(HttpMethod.POST, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
+                    authorize.requestMatchers(HttpMethod.POST, "/user/like").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
                     authorize.requestMatchers(HttpMethod.GET, "/vehicle/**").permitAll(); // Cambiado a hasAnyRole para incluir ADMIN
                     authorize.requestMatchers(HttpMethod.GET, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.POST, "/notification/**").permitAll();
