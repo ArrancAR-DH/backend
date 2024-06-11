@@ -36,17 +36,10 @@ public class User {
     @JoinColumn(name="id_role", referencedColumnName = "idRole")
     private Role role;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
-    private Set<Booking> bookings = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_user")
+    private List<Booking> bookings;
 
-    // public User(Long idUser, String userName, String password, String email, Role role) {
-    //     this.idUser = idUser;
-    //     this.userName = userName;
-    //     this.password = password;
-    //     this.email = email;
-    //     this.role = role;
-    // }
-    //
     public User(Long idUser, String firstName, String userName, String lastName, String password, String email, Role role) {
         this.idUser = idUser;
         this.firstName = userName;

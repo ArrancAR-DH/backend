@@ -33,9 +33,9 @@ public class Vehicle {
     @JoinColumn(name = "id_vehicle")
     private List<Img_urls> imgUrls;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_vehicle")
-    private List<Booking> bookings = new ArrayList<>();
+    private List<Booking> bookings;
 
     @ManyToOne
     @JoinColumn(name = "id_brand")

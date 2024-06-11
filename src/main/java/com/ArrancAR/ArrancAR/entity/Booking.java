@@ -10,20 +10,21 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 
 public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idBooking;
+
     @Column
     private LocalDate startsOn;
+
     @Column
     private LocalDate endsOn;
-    @ManyToOne
-    @JoinColumn(name = "id_user", referencedColumnName = "idUser")
-    private User user;
+
+    @Column(name = "id_user")
+    private Long idUser;
 
     @Column(name = "id_vehicle")
     private Long idVehicle;
