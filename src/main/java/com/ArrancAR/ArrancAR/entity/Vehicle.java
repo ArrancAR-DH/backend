@@ -25,8 +25,6 @@ public class Vehicle {
     @Column
     private String year;
     @Column
-    private Boolean reserved;
-    @Column
     private Double price;
 
     @OneToMany(cascade = CascadeType.ALL)

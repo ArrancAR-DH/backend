@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class BookingRequestDto {
 
     @NotNull(message = "startsOn no puede ser null")
-    private LocalDate sartsOn;
+    private LocalDate startsOn;
 
     @NotNull(message = "endsOn no puede ser null")
     private LocalDate endsOn;

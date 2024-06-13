@@ -30,7 +30,6 @@ public class MailController {
         if (foundUser.isPresent()) {
             return ResponseEntity.badRequest().body("User already exists with email: " + emailDto.getToUser());
         }
-
         try {
             emailService.sendEmail(emailDto.getToUser(), emailDto.getFullName());
             return ResponseEntity.ok("Email sent successfully to " + emailDto.getToUser());
