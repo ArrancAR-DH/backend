@@ -11,10 +11,12 @@ import com.ArrancAR.ArrancAR.repository.UserRepository;
 import com.ArrancAR.ArrancAR.repository.VehicleRepository;
 import com.ArrancAR.ArrancAR.service.BookingService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Tag(name= "Booking")
@@ -64,6 +66,16 @@ public class BookingController {
 
         //first need to remove associations to parents
 
+    }
+
+
+    // tomar un rango de fevhas mostrar todos los vehiculos disponibles - reservar ver que ids hay en esa fecha
+    // y luego enviar los que no tienen reserva
+
+
+    @GetMapping("dates")
+        public List<Vehicle> vehiclesByDate(@RequestBody LocalDate startsOn, @RequestBody LocalDate endsOn){
+        Optional <Booking> foundBooking = bookingService.getClass()
     }
 
 }

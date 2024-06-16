@@ -2,6 +2,7 @@ package com.ArrancAR.ArrancAR.mapper;
 
 import com.ArrancAR.ArrancAR.dto.BookingRequestDto;
 import com.ArrancAR.ArrancAR.dto.BookingResponseDto;
+import com.ArrancAR.ArrancAR.dto.DateRangeDto;
 import com.ArrancAR.ArrancAR.entity.Booking;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
