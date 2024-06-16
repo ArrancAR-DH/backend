@@ -1,8 +1,6 @@
 package com.ArrancAR.ArrancAR.controller;
 
 import com.ArrancAR.ArrancAR.entity.Model;
-import com.ArrancAR.ArrancAR.entity.Type;
-import com.ArrancAR.ArrancAR.entity.Model;
 import com.ArrancAR.ArrancAR.exception.DataIntegrityViolationException;
 import com.ArrancAR.ArrancAR.exception.ResourceNotFoundException;
 import com.ArrancAR.ArrancAR.service.ModelService;

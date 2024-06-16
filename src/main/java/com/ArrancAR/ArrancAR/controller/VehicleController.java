@@ -1,5 +1,6 @@
 package com.ArrancAR.ArrancAR.controller;
 
+import com.ArrancAR.ArrancAR.dto.DateRangeDto;
 import com.ArrancAR.ArrancAR.entity.Feature;
 import com.ArrancAR.ArrancAR.entity.Vehicle;
 import com.ArrancAR.ArrancAR.exception.DataIntegrityViolationException;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -165,5 +167,10 @@ public class VehicleController {
             return ResponseEntity.ok("Updated vehicle with ID: "+ vehicle.getIdVehicle());
         }
         return ResponseEntity.badRequest().body("Vehicle not found");
+    }
+
+    @GetMapping("/available")
+    public List<Vehicle> getAvailableVehicles(@RequestBody DateRangeDto dateRangeDto) {
+        return vehicleService.getAvailableVehicles(dateRangeDto.getStartDate(),dateRangeDto.getEndDate());
     }
 }

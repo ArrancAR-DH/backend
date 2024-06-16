@@ -26,13 +26,10 @@ public class BookingService {
 
     @Autowired
     VehicleService vehicleService;
-@Autowired
-    VehicleRepository vehicleRepository;
-    @Autowired
-    BookingDtoConverter bookingDtoConverter;
-
     @Autowired
     BookingRepository bookingRepository;
+    @Autowired
+    BookingDtoConverter bookingDtoConverter;
 
     public BookingResponseDto saveBooking(BookingRequestDto bookingRequestDto) {
 
@@ -68,18 +65,5 @@ public class BookingService {
 
     public Optional<Booking> findBookingById(Long idBooking) {
         return bookingRepository.findById(idBooking);
-    }
-
-    public List<Vehicle> findAvailableVehicles(LocalDate startsOn, LocalDate endsOn){
-      List<Booking> dateMatches = bookingRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqual(startsOn, endsOn);
-
-      List<Vehicle> allVehicles = vehicleRepository.findAll();
-
-       List<Vehicle> availableVehicles  = allVehicles.stream()
-               .filter(vehicle -> dateMatches.stream().noneMatch
-               (bookings -> bookings.getVehicle().equals(vehicle))).collect(Collectors.toList());
-
-       return availableVehicles;
-
     }
 }

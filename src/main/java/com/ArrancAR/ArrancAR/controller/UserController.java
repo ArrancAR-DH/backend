@@ -3,7 +3,6 @@ package com.ArrancAR.ArrancAR.controller;
 import com.ArrancAR.ArrancAR.dto.LikeDto;
 import com.ArrancAR.ArrancAR.entity.User;
 
-import com.ArrancAR.ArrancAR.entity.Vehicle;
 import com.ArrancAR.ArrancAR.exception.DataIntegrityViolationException;
 import com.ArrancAR.ArrancAR.exception.ResourceNotFoundException;
 import com.ArrancAR.ArrancAR.service.UserService;
