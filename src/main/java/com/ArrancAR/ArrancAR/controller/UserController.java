@@ -1,6 +1,7 @@
 package com.ArrancAR.ArrancAR.controller;
 
 import com.ArrancAR.ArrancAR.dto.LikeDto;
+import com.ArrancAR.ArrancAR.entity.Booking;
 import com.ArrancAR.ArrancAR.entity.User;
 
 import com.ArrancAR.ArrancAR.exception.DataIntegrityViolationException;
@@ -127,4 +128,13 @@ public class UserController {
         return null;
     }
 
+    @GetMapping("{idUser}/bookings")
+    public List<Booking> getBookingsById(@PathVariable Long idUser) throws ResourceNotFoundException{
+        Optional<User> foundUser= userService.findUserById(idUser);
+        if (foundUser.isPresent()){
+            return userService.findBookingsByIdUser(idUser);
+        } else {
+            throw new ResourceNotFoundException("User doesn't exist");
+        }
+    }
 }

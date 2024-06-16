@@ -11,11 +11,15 @@ import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    Optional<List<Booking>> findByIdVehicle(Long id);
-    
     @Query("SELECT b FROM Booking b WHERE b.idVehicle = :idVehicle AND " +
             "(:startsOn BETWEEN b.startsOn AND b.endsOn OR :endsOn BETWEEN b.startsOn AND b.endsOn OR " +
             "b.startsOn BETWEEN :startsOn AND :endsOn OR b.endsOn BETWEEN :startsOn AND :endsOn)")
 
     List<Booking> findOverlappingBookings(@Param("idVehicle") Long idVehicle, @Param("startsOn") LocalDate startsOn, @Param("endsOn") LocalDate endsOn);
+
+    @Query("SELECT b FROM Booking b WHERE b.idVehicle = :idVehicle")
+    List<Booking> findBookingsByIdVehicle(@Param("idVehicle") Long idVehicle);
+
+    @Query("SELECT b FROM Booking b WHERE b.idUser = :idUser")
+    List<Booking> findBookingsByIdUser(@Param("idUser") Long idUser);
 }

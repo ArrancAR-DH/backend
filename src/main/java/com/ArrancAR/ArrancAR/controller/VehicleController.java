@@ -173,4 +173,18 @@ public class VehicleController {
     public List<Vehicle> getAvailableVehicles(@RequestBody DateRangeDto dateRangeDto) {
         return vehicleService.getAvailableVehicles(dateRangeDto.getStartDate(),dateRangeDto.getEndDate());
     }
+
+//    @GetMapping("{idVehicle}/bookings")
+//    public List<DateRangeDto> dateRangeDtoList (@PathVariable Long idVehicle) {
+//        Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(idVehicle);
+//        if(foundVehicle.isPresent()) {
+//
+//            return null;
+//        }
+//    }
+
+    @GetMapping("/{idVehicle}/bookings")
+    public List<LocalDate[]> getBookingDateRangesByVehicleId(@PathVariable Long idVehicle) {
+        return vehicleService.getBookingDateRangesByIdVehicle(idVehicle);
+    }
 }

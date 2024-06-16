@@ -65,4 +65,11 @@ public class VehicleService {
                 .filter(vehicle -> isVehicleAvailable(vehicle.getIdVehicle(), startsOn, endsOn))
                 .collect(Collectors.toList());
     }
+
+    public List<LocalDate[]> getBookingDateRangesByIdVehicle(Long idVehicle) {
+        List<Booking> bookings = bookingRepository.findBookingsByIdVehicle(idVehicle);
+        return bookings.stream()
+                .map(booking -> new LocalDate[]{booking.getStartsOn(), booking.getEndsOn()})
+                .collect(Collectors.toList());
+    }
 }

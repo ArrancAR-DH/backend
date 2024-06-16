@@ -1,8 +1,10 @@
 package com.ArrancAR.ArrancAR.service;
 
+import com.ArrancAR.ArrancAR.entity.Booking;
 import com.ArrancAR.ArrancAR.entity.User;
 
 import com.ArrancAR.ArrancAR.entity.Vehicle;
+import com.ArrancAR.ArrancAR.repository.BookingRepository;
 import com.ArrancAR.ArrancAR.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
 
     public User addUser(User user){
         return userRepository.save(user);
@@ -29,5 +34,8 @@ public class UserService {
     }
     public void updateUser(User user){
         userRepository.save(user);
+    }
+    public List<Booking> findBookingsByIdUser(Long idUser) {
+        return bookingRepository.findBookingsByIdUser(idUser);
     }
 }
