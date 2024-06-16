@@ -51,6 +51,11 @@ public class BookingService {
         return bookingResponseDto;
     }
 
+    public boolean isVehicleAvailable(Long idVehicle, LocalDate startsOn, LocalDate endsOn) {
+        List<Booking> overlappingBookings = bookingRepository.findOverlappingBookings(idVehicle, startsOn, endsOn);
+        return overlappingBookings.isEmpty();
+    }
+
     private Vehicle checkVehicleExists(Long idVehicle) {
         return vehicleService.findVehicleById(idVehicle).orElseThrow(() -> new ResourceNotFoundException("No se encontró vehículo con el id: " + idVehicle));
     }

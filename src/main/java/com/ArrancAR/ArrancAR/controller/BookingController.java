@@ -6,6 +6,7 @@ import com.ArrancAR.ArrancAR.dto.BookingResponseDto;
 import com.ArrancAR.ArrancAR.entity.Booking;
 import com.ArrancAR.ArrancAR.entity.User;
 import com.ArrancAR.ArrancAR.entity.Vehicle;
+import com.ArrancAR.ArrancAR.exception.BusinessException;
 import com.ArrancAR.ArrancAR.exception.ResourceNotFoundException;
 import com.ArrancAR.ArrancAR.repository.UserRepository;
 import com.ArrancAR.ArrancAR.repository.VehicleRepository;
@@ -33,9 +34,13 @@ public class BookingController {
     UserRepository userRepository;
 
     @PostMapping
-    public ResponseEntity<BookingResponseDto> reservar(@RequestBody BookingRequestDto bookingRequestDto) {
-        BookingResponseDto bookingResponseDto = bookingService.saveBooking(bookingRequestDto);
-        return ResponseEntity.ok(bookingResponseDto);
+    public ResponseEntity<BookingResponseDto> reservar(@RequestBody BookingRequestDto bookingRequestDto) throws BusinessException{
+        if (bookingService.isVehicleAvailable(bookingRequestDto.getIdVehicle(),bookingRequestDto.getStartsOn(), bookingRequestDto.getEndsOn())) {
+            BookingResponseDto bookingResponseDto = bookingService.saveBooking(bookingRequestDto);
+            return ResponseEntity.ok(bookingResponseDto);
+        } else {
+            throw new BusinessException("No se puede realizar la reserva porque se superponen fechas por falta de disponibilidad. Por favor, elija otro rango de fechas");
+        }
     }
 
     @DeleteMapping("/{idBooking}")
