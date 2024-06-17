@@ -32,4 +32,9 @@ public class GlobalException {
 
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler({BusinessException.class})
+    public ResponseEntity<String> BusinessException(BusinessException businessException) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(businessException.getMessage());
+    }
 }

@@ -2,8 +2,8 @@ package com.ArrancAR.ArrancAR.controller;
 
 
 import com.ArrancAR.ArrancAR.entity.Brand;
-import com.ArrancAR.ArrancAR.entity.Model;
 import com.ArrancAR.ArrancAR.exception.DataIntegrityViolationException;
+import com.ArrancAR.ArrancAR.exception.ResourceNotFoundException;
 import com.ArrancAR.ArrancAR.service.BrandService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -60,8 +60,7 @@ public class BrandController {
             return ResponseEntity.ok(brandService.addBrand(brand));
         }
     }
-
-    /*
+    
     @Operation(summary = "Deleting a brand by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Brand removed correctly",
@@ -74,5 +73,15 @@ public class BrandController {
             @ApiResponse(responseCode = "500", description = "Server error",
                     content = @Content)
     })
-    */
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteBrand(@PathVariable Long id) throws ResourceNotFoundException {
+        Optional<Brand> foundBrand = brandService.findBrandById(id);
+        if(foundBrand.isPresent()) {
+            brandService.deleteBrandById(id);
+            return ResponseEntity.ok("Brand successfully eliminated");
+        } else {
+            throw new ResourceNotFoundException("The brand can't be eliminated because it doesn't exist");
+        }
+    }
 }

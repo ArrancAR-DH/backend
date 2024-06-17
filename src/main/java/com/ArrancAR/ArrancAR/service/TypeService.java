@@ -18,4 +18,7 @@ public class TypeService {
     public Optional<Type> findTypeByName(String name) { return typeRepository.findByName(name); }
     public Type addType(Type brand){ return typeRepository.save(brand); }
     public List<Type> listTypes() { return typeRepository.findAll();}
+    public void deleteTypeById(Long id) {
+        typeRepository.deleteById(id);
+    }
 }

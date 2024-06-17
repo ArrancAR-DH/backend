@@ -1,16 +1,19 @@
 package com.ArrancAR.ArrancAR.service;
 
 
+import com.ArrancAR.ArrancAR.entity.Booking;
 import com.ArrancAR.ArrancAR.entity.Brand;
-import com.ArrancAR.ArrancAR.entity.Feature;
 import com.ArrancAR.ArrancAR.entity.Vehicle;
+import com.ArrancAR.ArrancAR.repository.BookingRepository;
 import com.ArrancAR.ArrancAR.repository.FeatureRepository;
 import com.ArrancAR.ArrancAR.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class VehicleService {
@@ -18,7 +21,10 @@ public class VehicleService {
 
     @Autowired
     private VehicleRepository vehicleRepository;
+    @Autowired
     private FeatureRepository featureRepository;
+    @Autowired
+    private BookingRepository bookingRepository;
 
     public Vehicle addVehicle(Vehicle vehicle){
         return vehicleRepository.save(vehicle);
@@ -46,5 +52,24 @@ public class VehicleService {
 
     public void updateVehicle(Vehicle vehicle) {
         vehicleRepository.save(vehicle);
+    }
+
+    public boolean isVehicleAvailable(Long idVehicle, LocalDate startsOn, LocalDate endsOn) {
+        List<Booking> overlappingBookings = bookingRepository.findOverlappingBookings(idVehicle, startsOn, endsOn);
+        return overlappingBookings.isEmpty();
+    }
+
+    public List<Vehicle> getAvailableVehicles(LocalDate startsOn, LocalDate endsOn) {
+        List<Vehicle> allVehicles = vehicleRepository.findAll();
+        return allVehicles.stream()
+                .filter(vehicle -> isVehicleAvailable(vehicle.getIdVehicle(), startsOn, endsOn))
+                .collect(Collectors.toList());
+    }
+
+    public List<LocalDate[]> getBookingDateRangesByIdVehicle(Long idVehicle) {
+        List<Booking> bookings = bookingRepository.findBookingsByIdVehicle(idVehicle);
+        return bookings.stream()
+                .map(booking -> new LocalDate[]{booking.getStartsOn(), booking.getEndsOn()})
+                .collect(Collectors.toList());
     }
 }

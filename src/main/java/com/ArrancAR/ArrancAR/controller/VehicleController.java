@@ -1,5 +1,6 @@
 package com.ArrancAR.ArrancAR.controller;
 
+import com.ArrancAR.ArrancAR.dto.DateRangeDto;
 import com.ArrancAR.ArrancAR.entity.Feature;
 import com.ArrancAR.ArrancAR.entity.Vehicle;
 import com.ArrancAR.ArrancAR.exception.DataIntegrityViolationException;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -119,7 +121,7 @@ public class VehicleController {
         if ( foundVehicle.isPresent() && foundFeature.isPresent() ){
             Vehicle vehicle = foundVehicle.get();
             Feature feature = foundFeature.get();
-            vehicle.getFeatures().add(feature);
+            vehicle.addFeature(feature);
             return ResponseEntity.ok(vehicleService.addVehicle(vehicle));
 
     } else {
@@ -165,5 +167,24 @@ public class VehicleController {
             return ResponseEntity.ok("Updated vehicle with ID: "+ vehicle.getIdVehicle());
         }
         return ResponseEntity.badRequest().body("Vehicle not found");
+    }
+
+    @GetMapping("/available")
+    public List<Vehicle> getAvailableVehicles(@RequestBody DateRangeDto dateRangeDto) {
+        return vehicleService.getAvailableVehicles(dateRangeDto.getStartDate(),dateRangeDto.getEndDate());
+    }
+
+//    @GetMapping("{idVehicle}/bookings")
+//    public List<DateRangeDto> dateRangeDtoList (@PathVariable Long idVehicle) {
+//        Optional<Vehicle> foundVehicle = vehicleService.findVehicleById(idVehicle);
+//        if(foundVehicle.isPresent()) {
+//
+//            return null;
+//        }
+//    }
+
+    @GetMapping("/{idVehicle}/bookings")
+    public List<LocalDate[]> getBookingDateRangesByVehicleId(@PathVariable Long idVehicle) {
+        return vehicleService.getBookingDateRangesByIdVehicle(idVehicle);
     }
 }

@@ -27,19 +27,19 @@ public class SuperAdmin implements ApplicationRunner {
         String passSinCifrar = "superadmin";
         String passCifrado = cifrador.encode(passSinCifrar);
         Role roleSuperAdmin = new Role(1L, "ROLE_SUPER_ADMIN", "SUPERADMIN");
-        User userSuperAdmin = new User(1L, "superadmin", passCifrado, "superadmin@gmail.com", roleRepository.save(roleSuperAdmin));
+        User userSuperAdmin = new User(1L, "Super", "superadmin", "Admin", passCifrado, "superadmin@gmail.com", roleRepository.save(roleSuperAdmin));
         userRepository.save(userSuperAdmin);
 
         String passSinCifrarAdmin = "admin";
         String passCifradoAdmin = cifrador.encode(passSinCifrarAdmin);
         Role roleAdmin = new Role(2L, "ROLE_ADMIN", "ADMIN");
-        User userAdmin = new User(2L, "admin", passCifradoAdmin, "admin@gmail.com", roleRepository.save(roleAdmin));
+        User userAdmin = new User(2L,"Standard", "admin", "Admin", passCifradoAdmin, "admin@gmail.com", roleRepository.save(roleAdmin));
         userRepository.save(userAdmin);
 
         String passSinCifrarUser = "user";
         String passCifradoUser = cifrador.encode(passSinCifrarUser);
         Role roleUser = new Role(3L, "ROLE_USER", "USER");
-        User userUser = new User(3L, "user", passCifrado, "user@gmail.com", roleRepository.save(roleUser));
+        User userUser = new User(3L, "Standard", "user", "User", passCifradoUser, "user@gmail.com", roleRepository.save(roleUser));
         userRepository.save(userUser);
     }
 

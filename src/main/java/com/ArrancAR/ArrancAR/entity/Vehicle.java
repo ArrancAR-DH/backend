@@ -3,19 +3,16 @@ package com.ArrancAR.ArrancAR.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "vehicle")
-@Data
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class Vehicle {
     @Id
@@ -26,7 +23,7 @@ public class Vehicle {
     @Column
     private String description;
     @Column
-    private Boolean reserved;
+    private String year;
     @Column
     private Double price;
 
@@ -35,8 +32,9 @@ public class Vehicle {
     @JoinColumn(name = "id_vehicle")
     private List<Img_urls> imgUrls;
 
-    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
-    private Set<Booking> bookings = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_vehicle")
+    private List<Booking> bookings;
 
     @ManyToOne
     @JoinColumn(name = "id_brand")
@@ -50,42 +48,17 @@ public class Vehicle {
     @JoinColumn(name = "id_type")
     private Type type;
 
-    @ManyToMany
-    @JoinTable(
-            name = "vehicle_features",
-            joinColumns = @JoinColumn(name = "id_vehicle", referencedColumnName = "idVehicle"),
-            inverseJoinColumns = @JoinColumn(name = "id_feature", referencedColumnName = "idFeature" )
-    )
-    private Set<Feature> features = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "feature_id")
+    private List<Feature> features;
 
-    public Vehicle(Long idVehicle, String plate, String description, Boolean reserved, Double price, Model model, Type type, Brand brand) {
-        this.idVehicle = idVehicle;
-        this.plate = plate;
-        this.description = description;
-        this.reserved = reserved;
-        this.price = price;
-        this.model = model;
-        this.type = type;
-        this.brand = brand;
-    }
-
-    public Vehicle(String plate, String description, Boolean reserved, Double price, Model model, Type type, Brand brand) {
-        this.plate = plate;
-        this.description = description;
-        this.reserved = reserved;
-        this.price = price;
-        this.model = model;
-        this.type = type;
-        this.brand = brand;
-    }
-
-    public Vehicle(String plate, Model model, Type type, Brand brand) {
-        this.plate = plate;
-        this.model = model;
-        this.type = type;
-        this.brand = brand;
-    }
-
-    public Vehicle() {
+    public void addFeature(Feature feature) {
+        if (Objects.isNull(features)) {
+            features = new ArrayList<>();
+            features.add(feature);
+        }
+        else {
+            features.add(feature);
+        }
     }
 }

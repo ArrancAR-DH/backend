@@ -27,4 +27,7 @@ public class ModelService {
     public List<Model> listModels() {
         return modelRepository.findAll();
     }
+    public void deleteModelById(Long id) {
+        modelRepository.deleteById(id);
+    }
 }

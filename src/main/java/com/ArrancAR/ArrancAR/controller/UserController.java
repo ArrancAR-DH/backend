@@ -1,8 +1,9 @@
 package com.ArrancAR.ArrancAR.controller;
 
+import com.ArrancAR.ArrancAR.dto.LikeDto;
+import com.ArrancAR.ArrancAR.entity.Booking;
 import com.ArrancAR.ArrancAR.entity.User;
 
-import com.ArrancAR.ArrancAR.entity.Vehicle;
 import com.ArrancAR.ArrancAR.exception.DataIntegrityViolationException;
 import com.ArrancAR.ArrancAR.exception.ResourceNotFoundException;
 import com.ArrancAR.ArrancAR.service.UserService;
@@ -48,7 +49,7 @@ public class UserController {
         }
     }
     @GetMapping("/all")
-    public List<User> listVehicles() {
+    public List<User> lisUsers() {
         return userService.listUsers();
     }
 
@@ -84,6 +85,7 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Server error",
                     content = @Content)
     })
+
     @PutMapping("update")
     public ResponseEntity<String> updateUser(@RequestBody User user) throws ResourceNotFoundException {
         Optional<User> foundUser= userService.findUserById(user.getIdUser());
@@ -95,4 +97,44 @@ public class UserController {
         }
     }
 
+    @PostMapping("/like")
+    public ResponseEntity<List<Long>> likeVehicle(@RequestBody LikeDto likeDto) {
+        Optional<User> foundUser= userService.findUserById(likeDto.getIdUser());
+        if(foundUser.isPresent()) {
+            User user = foundUser.get();
+            user.addLikedVehicle(likeDto.getIdVehicle());
+            userService.addUser(user);
+            return ResponseEntity.ok(user.getLikedVehicleIds());
+        }
+        return null;
+    }
+
+    @GetMapping("/likes/{idUser}")
+    public List<Long> listLikes(@PathVariable Long idUser) {
+        Optional<User> foundUser= userService.findUserById(idUser);
+        User user = foundUser.get();
+        return user.getLikedVehicleIds();
+    }
+
+    @DeleteMapping("/dislike")
+    public ResponseEntity<List<Long>> dislikeVehicle(@RequestBody LikeDto likeDto) {
+        Optional<User> foundUser= userService.findUserById(likeDto.getIdUser());
+        if(foundUser.isPresent()) {
+            User user = foundUser.get();
+            user.getLikedVehicleIds().remove(likeDto.getIdVehicle());
+            userService.addUser(user);
+            return ResponseEntity.ok(user.getLikedVehicleIds());
+        }
+        return null;
+    }
+
+    @GetMapping("{idUser}/bookings")
+    public List<Booking> getBookingsById(@PathVariable Long idUser) throws ResourceNotFoundException{
+        Optional<User> foundUser= userService.findUserById(idUser);
+        if (foundUser.isPresent()){
+            return userService.findBookingsByIdUser(idUser);
+        } else {
+            throw new ResourceNotFoundException("User doesn't exist");
+        }
+    }
 }

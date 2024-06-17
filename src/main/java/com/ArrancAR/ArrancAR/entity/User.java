@@ -3,8 +3,7 @@ package com.ArrancAR.ArrancAR.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "user")
@@ -30,20 +29,40 @@ public class User {
     private String password;
     @Column (nullable = false, unique = true)
     private String email;
+    @Column
+    private List<Long> likedVehicleIds;
+
     @ManyToOne
     @JoinColumn(name="id_role", referencedColumnName = "idRole")
     private Role role;
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
-    private Set<Booking> bookings = new HashSet<>();
 
-    public User(Long idUser, String userName, String password, String email, Role role) {
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_user")
+    private List<Booking> bookings;
+
+    public User(Long idUser, String firstName, String userName, String lastName, String password, String email, Role role) {
         this.idUser = idUser;
+        this.firstName = userName;
         this.userName = userName;
         this.password = password;
+        this.lastName = userName;
         this.email = email;
         this.role = role;
     }
 
+    public void addLikedVehicle(Long id) {
+        if (Objects.isNull(likedVehicleIds)) {
+            likedVehicleIds = new ArrayList<>();
+            likedVehicleIds.add(id);
+        }
+        else {
+            likedVehicleIds.add(id);
+        }
+    }
+
+    public void dislikeVehicle(Long id) {
+        likedVehicleIds.remove(id);
+    }
 
     public String getPassword() {
         return password;
@@ -52,9 +71,6 @@ public class User {
     public String getEmail() {
         return email;
     }
-
-
-
 
     public Long getIdUser() {
         return idUser;

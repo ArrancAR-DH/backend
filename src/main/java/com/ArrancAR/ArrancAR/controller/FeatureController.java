@@ -75,6 +75,7 @@ public class FeatureController {
             @ApiResponse(responseCode = "500", description = "Server error",
                     content = @Content)
     })
+
     @PostMapping
     public ResponseEntity<Feature> createFeature (@RequestBody Feature feature) throws DataIntegrityViolationException{
 
@@ -87,18 +88,7 @@ public class FeatureController {
 
     }
 
-    @DeleteMapping("/delete/{idFeature}")
-    public ResponseEntity<String> deleteFeature(@PathVariable Long idFeature) throws ResourceNotFoundException {
-        Optional<Feature> foundFeature = featureService.findFeatureById((idFeature));
-        if(foundFeature.isPresent()){
-            featureService.deleteFeatureById(idFeature);
-            return ResponseEntity.ok("Feature successfully eliminated");
-        } else {
-            throw new ResourceNotFoundException("The feature can't be eliminated because it doesn't exist");
-        }
-    }
-
-    /* @Operation(summary = "Deleting a feature by ID")
+    @Operation(summary = "Deleting a feature by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Feature removed correctly",
                     content = {@Content(mediaType = "application/json",
@@ -110,8 +100,21 @@ public class FeatureController {
             @ApiResponse(responseCode = "500", description = "Server error",
                     content = @Content)
     })
-
-     @Operation(summary = "Updating a feature")
+    
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteFeature(@PathVariable Long id) throws ResourceNotFoundException {
+        Optional<Feature> foundFeature = featureService.findFeatureById(id);
+        if(foundFeature.isPresent()) {
+            featureService.deleteFeatureById(id);
+            return ResponseEntity.ok("Feature successfully eliminated");
+        } else {
+            throw new ResourceNotFoundException("The feature can't be eliminated because it doesn't exist");
+        }
+    }
+    
+    
+    /*
+    @Operation(summary = "Updating a feature")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Feature updated correctly",
                     content = {@Content(mediaType = "application/json",

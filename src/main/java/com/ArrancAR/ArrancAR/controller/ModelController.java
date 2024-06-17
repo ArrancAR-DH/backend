@@ -1,8 +1,8 @@
 package com.ArrancAR.ArrancAR.controller;
 
 import com.ArrancAR.ArrancAR.entity.Model;
-import com.ArrancAR.ArrancAR.entity.Type;
 import com.ArrancAR.ArrancAR.exception.DataIntegrityViolationException;
+import com.ArrancAR.ArrancAR.exception.ResourceNotFoundException;
 import com.ArrancAR.ArrancAR.service.ModelService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -61,7 +61,7 @@ public class ModelController {
             return ResponseEntity.ok(modelService.addModel(model));
         }
     }
-/*
+    
     @Operation(summary = "Deleting a model by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Model removed correctly",
@@ -74,5 +74,16 @@ public class ModelController {
             @ApiResponse(responseCode = "500", description = "Server error",
                     content = @Content)
     })
-    */
+    
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteModel(@PathVariable Long id) throws ResourceNotFoundException {
+        Optional<Model> foundModel = modelService.findModelById(id);
+        if(foundModel.isPresent()) {
+
+            modelService.deleteModelById(id);
+            return ResponseEntity.ok("Model successfully eliminated");
+        } else {
+            throw new ResourceNotFoundException("The model can't be eliminated because it doesn't exist");
+        }
+    }
 }
