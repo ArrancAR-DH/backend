@@ -16,6 +16,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableMethodSecurity
@@ -24,14 +30,28 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SpringSecurityConfig {
     private UserDetailsService userDetailsService;
 
-    @Bean
-    public static PasswordEncoder passwordEncoder() {
+      @Bean
+      public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+      }
+
+      @Bean
+      public CorsConfigurationSource corsConfigurationSource() {
+            CorsConfiguration configuration = new CorsConfiguration();
+            configuration.addAllowedOriginPattern("*");
+            configuration.setAllowedMethods(List.of("*"));
+            configuration.setAllowedHeaders(List.of("*"));
+            configuration.setAllowCredentials(true);
+            configuration.setMaxAge(3600L);
+            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+            source.registerCorsConfiguration("/**", configuration);
+            return source;
+      }
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
+                    .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(HttpMethod.PUT, "/vehicle/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.PUT, "/user/update").hasAnyRole("SUPER_ADMIN");
@@ -46,7 +66,9 @@ public class SpringSecurityConfig {
                     authorize.requestMatchers(HttpMethod.POST, "/model").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.POST, "/feature").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.POST, "/vehicle").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
-                    authorize.requestMatchers(HttpMethod.POST, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
+                      authorize.requestMatchers(HttpMethod.POST, "/vehicle/**").permitAll(); // Corregir esto, (pero si funciona dejarlo?)
+
+                      authorize.requestMatchers(HttpMethod.POST, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
                     authorize.requestMatchers(HttpMethod.POST, "/user/like").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
                     authorize.requestMatchers(HttpMethod.GET, "/vehicle/**").permitAll(); // Cambiado a hasAnyRole para incluir ADMIN
                     authorize.requestMatchers(HttpMethod.GET, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
