@@ -25,8 +25,11 @@ jobs:
         run: |
           # Stop existing service (if any)
           sudo systemctl stop arrancar-api.service || true
+          cat ./src/main/resources/application.properties
           rm ./src/main/resources/application.properties
+          cat ./src/main/resources/application.properties
           cp /home/ubuntu/back/application.properties ./src/main/resources/application.properties
+          cat ./src/main/resources/application.properties
           mvn clean install
           # Copy the new jar to the deployment directory
           cp target/arrancar-api.jar /home/ubuntu/backend-api/
