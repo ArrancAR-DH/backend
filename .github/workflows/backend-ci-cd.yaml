@@ -25,6 +25,7 @@ jobs:
         run: |
           # Stop existing service (if any)
           sudo systemctl stop arrancar-api.service || true
+          rm ./src/main/resources/application.properties
           cp /home/ubuntu/back/application.properties ./src/main/resources/application.properties
           mvn clean install
           # Copy the new jar to the deployment directory
