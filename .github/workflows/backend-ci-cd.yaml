@@ -27,7 +27,6 @@ jobs:
           sudo systemctl stop arrancar-api.service || true
           cat ./src/main/resources/application.properties
           rm ./src/main/resources/application.properties
-          cat ./src/main/resources/application.properties
           cp /home/ubuntu/back/application.properties ./src/main/resources/application.properties
           cat ./src/main/resources/application.properties
           mvn clean install
