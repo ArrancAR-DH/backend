@@ -19,7 +19,6 @@ import java.util.Optional;
 
 @Tag(name= "Type")
 @RestController
-@CrossOrigin(origins = "http://localhost:5173/")
 @RequestMapping("/type")
 public class TypeController {
 

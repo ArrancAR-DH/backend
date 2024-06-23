@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Tag(name= "Booking")
 @RestController
-@CrossOrigin(origins = "http://localhost:5173/")
+
 @RequestMapping("/booking")
 public class BookingController {
 

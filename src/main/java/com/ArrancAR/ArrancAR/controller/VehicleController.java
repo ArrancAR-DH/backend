@@ -23,7 +23,6 @@ import java.util.Optional;
 
 @Tag(name= "Vehicle")
 @RestController
-@CrossOrigin(origins = "http://localhost:5173/")
 @RequestMapping("/vehicle")
 public class VehicleController {
 

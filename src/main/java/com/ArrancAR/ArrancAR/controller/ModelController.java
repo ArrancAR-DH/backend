@@ -19,7 +19,6 @@ import java.util.Optional;
 
 @Tag(name= "Model")
 @RestController
-@CrossOrigin(origins = "http://localhost:5173/")
 @RequestMapping("/model")
 public class ModelController {
 

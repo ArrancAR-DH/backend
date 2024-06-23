@@ -20,7 +20,6 @@ import java.util.Optional;
 
 @Tag(name= "Brand")
 @RestController
-@CrossOrigin(origins = "http://localhost:5173/")
 @RequestMapping("/brand")
 public class BrandController {
 
