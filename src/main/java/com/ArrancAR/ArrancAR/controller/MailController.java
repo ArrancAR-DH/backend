@@ -1,7 +1,10 @@
 package com.ArrancAR.ArrancAR.controller;
 
+import com.ArrancAR.ArrancAR.dto.BookingResponseDto;
 import com.ArrancAR.ArrancAR.dto.EmailDto;
+import com.ArrancAR.ArrancAR.entity.Booking;
 import com.ArrancAR.ArrancAR.entity.User;
+import com.ArrancAR.ArrancAR.service.BookingService;
 import com.ArrancAR.ArrancAR.service.EmailService;
 import com.ArrancAR.ArrancAR.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,10 @@ public class MailController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BookingService bookingService;
+
+
     @PostMapping("/send")
     public ResponseEntity<String> receiveRequestEmail(@RequestBody EmailDto emailDto) {
         Optional<User> foundUser = userService.findUserByEmail(emailDto.getToUser());
@@ -32,6 +39,21 @@ public class MailController {
         }
         try {
             emailService.sendEmail(emailDto.getToUser(), emailDto.getFullName());
+            return ResponseEntity.ok("Email sent successfully to " + emailDto.getToUser());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending email: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/booking-email/{idBooking}")
+    public ResponseEntity<String> confirmRequestEmail(@PathVariable Long idBooking, @RequestBody EmailDto emailDto) {
+        Optional<Booking> foundBooking = bookingService.findBookingById(idBooking);
+
+        if (foundBooking.isPresent()) {
+            return ResponseEntity.badRequest().body("The reservation could not be made, it already exists");
+        }
+        try {
+            emailService.sendEmailReserved(emailDto.getToUser(), emailDto.getFullName());
             return ResponseEntity.ok("Email sent successfully to " + emailDto.getToUser());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending email: " + e.getMessage());
