@@ -51,6 +51,9 @@ public class Vehicle {
     @JoinColumn(name = "id_vehicle")
     private List<Feature> features;
 
+    private Score score;
+
+
     public void addFeature(Feature feature) {
         if (Objects.isNull(features)) {
             features = new ArrayList<>();
