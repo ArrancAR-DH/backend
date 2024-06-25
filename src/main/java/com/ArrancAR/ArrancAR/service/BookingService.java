@@ -45,9 +45,6 @@ public class BookingService {
 
         BookingResponseDto bookingResponseDto = bookingDtoConverter.convertBookingToBookingResponseDto(newBooking);
 
-        //TODO
-        //Agregar envio de mail de confirmación
-
         return bookingResponseDto;
     }
 

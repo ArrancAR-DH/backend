@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -38,18 +39,7 @@ public class EmailServiceImpl implements EmailService {
             "  </body>\n" +
             "  </html>";
 
-    private String htmlTemplateBooking = "<html>\n" +
-            "  <head>\n" +
-            "<link rel=\"stylesheet\" href=\"styles.css\">\n" +
-            "  </head>\n" +
-            "  <body>\n" +
-            "<h1>¡Tu reserva ha sido confirmada!</h1>\n" +
-            "<p>Gracias por reservar con ArrancAR. Aquí tienes los detalles de tu reserva:</p>\n" +
-            "<br><br>" +
-            "<a href=\"http://localhost:5173/booking\" class=\"button\">Ver detalle de reserva</a>\n" +
-            "<p>Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos.</p>" +
-            "</body>\n" +
-            "</html>";
+
     @Override
     public void sendEmail(String toUser, String fullName) {
         try {
@@ -68,7 +58,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendEmailReserved(String toUser, String fullName) {
+    public void sendEmailReserved(String toUser, String fullName, LocalDate startsOn, LocalDate endsOn, String nameVehicle) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8.name());
@@ -76,7 +66,20 @@ public class EmailServiceImpl implements EmailService {
             mimeMessageHelper.setFrom(username);
             mimeMessageHelper.setTo(toUser);
             mimeMessageHelper.setSubject("Confirmación de reserva - ArrancAr");
-            mimeMessageHelper.setText("Hola," + fullName + "!"+ htmlTemplateBooking, true);
+            mimeMessageHelper.setText("Hola," + fullName + "!"+ "<html>\n" +
+                    "  <head>\n" +
+                    "  </head>\n" +
+                    "  <body>\n" +
+                    "<h1>¡Tu reserva ha sido confirmada!</h1>\n" +
+                    "<p>Gracias por reservar con ArrancAR. Aquí tienes los detalles de tu reserva:</p>\n" +
+                    "<p><strong>Nombre:</strong> " + fullName + "</p>" +
+                    "<p><strong>Vehículo:</strong> " + nameVehicle +" </p>" +
+                    "<p><strong>Fecha de inicio:</strong> " + startsOn +" </p>" +
+                    "<p><strong>Fecha de Fin:</strong> " + endsOn +" </p>" +
+                    "<p>Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos.</p>" +
+                    "</body>\n" +
+                    "</html>"
+                    , true);
 
             mailSender.send(mimeMessage);
         } catch (Exception e) {
