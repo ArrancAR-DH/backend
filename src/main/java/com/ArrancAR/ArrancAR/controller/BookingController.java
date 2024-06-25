@@ -11,11 +11,13 @@ import com.ArrancAR.ArrancAR.exception.ResourceNotFoundException;
 import com.ArrancAR.ArrancAR.repository.UserRepository;
 import com.ArrancAR.ArrancAR.repository.VehicleRepository;
 import com.ArrancAR.ArrancAR.service.BookingService;
+import com.ArrancAR.ArrancAR.service.EmailServiceImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Tag(name= "Booking")
@@ -33,14 +35,31 @@ public class BookingController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    EmailServiceImpl emailService;
+
     @PostMapping
-    public ResponseEntity<BookingResponseDto> reservar(@RequestBody BookingRequestDto bookingRequestDto) throws BusinessException{
+    public ResponseEntity<BookingResponseDto> reservar(@RequestBody BookingRequestDto bookingRequestDto) throws BusinessException, ResourceNotFoundException {
         if (bookingService.isVehicleAvailable(bookingRequestDto.getIdVehicle(),bookingRequestDto.getStartsOn(), bookingRequestDto.getEndsOn())) {
             BookingResponseDto bookingResponseDto = bookingService.saveBooking(bookingRequestDto);
+
+            User foundUser = userRepository.findById(bookingRequestDto.getIdUser()).orElseThrow(() -> new ResourceNotFoundException("No se encontró usuario"));
+            Vehicle foundVehicle = vehicleRepository.findById(bookingRequestDto.getIdVehicle()).orElseThrow(() -> new ResourceNotFoundException("No se encontró el vehiculo"));
+            String userFullName = foundUser.getFirstName() + " " + foundUser.getLastName();
+            String vehicleName = foundVehicle.getBrand().getName() + " " + foundVehicle.getModel().getName();
+
+
+            emailService.sendEmailReserved(foundUser.getEmail(), userFullName, bookingRequestDto.getStartsOn(), bookingRequestDto.getEndsOn(), vehicleName);
+
+
             return ResponseEntity.ok(bookingResponseDto);
         } else {
             throw new BusinessException("No se puede realizar la reserva porque se superponen fechas por falta de disponibilidad. Por favor, elija otro rango de fechas");
         }
+
+
+
+
     }
 
     @DeleteMapping("/{idBooking}")
