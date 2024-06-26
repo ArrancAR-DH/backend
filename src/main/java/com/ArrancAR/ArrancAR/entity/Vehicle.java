@@ -51,7 +51,7 @@ public class Vehicle {
     @JoinColumn(name = "id_vehicle")
     private List<Feature> features;
 
-    @OneToMany(mappedBy = "id_vehicle", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_vehicle")
     private List<Score> scores;
 
@@ -67,4 +67,6 @@ public class Vehicle {
             features.add(feature);
         }
     }
+
+
 }

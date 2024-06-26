@@ -79,6 +79,7 @@ public class SpringSecurityConfig {
                     authorize.requestMatchers(HttpMethod.POST, "/notification/**").permitAll();
                     authorize.requestMatchers(HttpMethod.POST, "/login").permitAll();
                     authorize.requestMatchers(HttpMethod.POST, "/booking").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST, "/score/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
                     authorize.requestMatchers("/auth/**").permitAll();
                     authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     authorize.anyRequest().authenticated();
