@@ -51,8 +51,12 @@ public class Vehicle {
     @JoinColumn(name = "id_vehicle")
     private List<Feature> features;
 
-    private Score score;
+    @OneToMany(mappedBy = "id_vehicle", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_vehicle")
+    private List<Score> scores;
 
+    @Column
+    private Integer promedio;
 
     public void addFeature(Feature feature) {
         if (Objects.isNull(features)) {

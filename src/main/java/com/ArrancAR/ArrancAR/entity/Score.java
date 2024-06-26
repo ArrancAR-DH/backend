@@ -29,14 +29,7 @@ public class Score {
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name="id_vehicle", referencedColumnName = "idVehicle")
-    private Long idVehicle;
-
-    @ManyToOne
-    @JoinColumn(name="id_user", referencedColumnName = "idUser")
-    private Long idUser;
-
-
-
+    @JoinColumn(name = "id_user", referencedColumnName = "idScore")
+    private User user;
 
 }
