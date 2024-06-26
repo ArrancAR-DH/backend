@@ -48,8 +48,8 @@ public class Vehicle {
     @JoinColumn(name = "id_type")
     private Type type;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "feature_id")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "id_vehicle")
     private List<Feature> features;
 
     public void addFeature(Feature feature) {
