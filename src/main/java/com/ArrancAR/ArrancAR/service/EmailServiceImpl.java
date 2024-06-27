@@ -34,7 +34,7 @@ public class EmailServiceImpl implements EmailService {
             "  <body>\n" +
             "    <h1>¡Te damos la bienvenida a ArrancAR!</h1>\n" +
             "    <p>Por favor, haz clic en el siguiente botón para iniciar sesión:</p>\n" +
-            "    <a href=\"http://localhost:5173/login\" class=\"button\">Iniciar Sesión</a>\n" +
+            "    <a href=\"http://34.234.216.198/login\" class=\"button\">Iniciar Sesión</a>\n" +
             "    <p>Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos.</p>\n" +
             "  </body>\n" +
             "  </html>";
