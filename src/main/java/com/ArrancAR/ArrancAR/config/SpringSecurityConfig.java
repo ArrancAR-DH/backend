@@ -66,12 +66,12 @@ public class SpringSecurityConfig {
                     authorize.requestMatchers(HttpMethod.POST, "/model").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.POST, "/feature").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.POST, "/vehicle").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
-                      authorize.requestMatchers(HttpMethod.POST, "/vehicle/**").permitAll(); // Corregir esto, (pero si funciona dejarlo?)
+                    authorize.requestMatchers(HttpMethod.POST, "/vehicle/**").permitAll(); // Corregir esto, (pero si funciona dejarlo?)
 
-                      authorize.requestMatchers(HttpMethod.POST, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
+                    authorize.requestMatchers(HttpMethod.POST, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
                     authorize.requestMatchers(HttpMethod.POST, "/user/like").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
                     authorize.requestMatchers(HttpMethod.GET, "/vehicle/**").permitAll(); // Cambiado a hasAnyRole para incluir ADMIN
-                    authorize.requestMatchers(HttpMethod.GET, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
+                    authorize.requestMatchers(HttpMethod.GET, "/user/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER");
                     authorize.requestMatchers(HttpMethod.GET, "/brand/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.GET, "/type/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
                     authorize.requestMatchers(HttpMethod.GET, "/model/**").hasAnyRole("SUPER_ADMIN", "ADMIN");
